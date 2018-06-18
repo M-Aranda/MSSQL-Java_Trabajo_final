@@ -525,13 +525,13 @@ BEGIN
 	CLOSE cursor_informe
 	DEALLOCATE cursor_informe
 
-	SELECT TOP (@nPerp) run AS 'RUT', cantDelitos AS 'Cantidad de delitos',aniosAcumulados AS 'Anios acumulados' FROM #tablaTemporal ORDER BY aniosAcumulados DESC
+	SELECT TOP (@nPerp) run AS 'RUT', cantDelitos AS 'Cantidad de delitos',aniosAcumulados AS 'Anios acumulados' FROM  #tablaTemporal  ORDER BY aniosAcumulados DESC 
 
 	END
 	GO
 
 
-EXEC determinarTOPNperpetradoresMasPeligrosos 3
+EXEC determinarTOPNperpetradoresMasPeligrosos 5-- Limitar seleccion del top en Java
 
 
 

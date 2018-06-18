@@ -16,8 +16,14 @@ public class Data {
     }
 
 
-    public void hacerUnInsertLoco() throws SQLException{
-        query="INSERT INTO orientacionSexual VALUES ('esque')";
+    public void crearOrientacionSexual(String nombre) throws SQLException{
+        query="EXEC CRUDorientacionSexual 1,'"+nombre+"',1";
+        con.ejecutar(query);
+        
+    }
+    
+    public void crearTipoDeDelito(String nombre) throws SQLException{
+        query="EXEC CRUDtipoDeDelito 1,'"+nombre+"',1";
         con.ejecutar(query);
         
     }
