@@ -15,16 +15,16 @@ public class Juez {
     private String nombre;
     private String apellido;
     private int edad;
-    private int fk_genero;
+    private String genero;
     private String sexo;
     private int NDeSentenciasDictadas;
 
-    public Juez(String run, String nombre, String apellido, int edad, int fk_genero, String sexo, int NDeSentenciasDictadas) {
+    public Juez(String run, String nombre, String apellido, int edad, String fk_genero, String sexo, int NDeSentenciasDictadas) {
         this.run = run;
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
-        this.fk_genero = fk_genero;
+        this.genero = fk_genero;
         this.sexo = sexo;
         this.NDeSentenciasDictadas = NDeSentenciasDictadas;
     }
@@ -61,12 +61,12 @@ public class Juez {
         this.edad = edad;
     }
 
-    public int getFk_genero() {
-        return fk_genero;
+    public String getGenero() {
+        return genero;
     }
 
-    public void setFk_genero(int fk_genero) {
-        this.fk_genero = fk_genero;
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
     public String getSexo() {
@@ -87,7 +87,10 @@ public class Juez {
 
     @Override
     public String toString() {
-        return "Juez{" + "run=" + run + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", fk_genero=" + fk_genero + ", sexo=" + sexo + ", NDeSentenciasDictadas=" + NDeSentenciasDictadas + '}';
+        return "Juez{" + "run=" + run + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", fk_genero=" + genero + ", sexo=" + sexo + ", NDeSentenciasDictadas=" + NDeSentenciasDictadas + '}';
     }
 
+   
+    
+    
 }

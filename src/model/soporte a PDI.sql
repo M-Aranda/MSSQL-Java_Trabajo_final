@@ -543,18 +543,25 @@ EXEC determinarTOPNperpetradoresMasPeligrosos 5-- Limitar seleccion del top en J
 /* CONSULTAS */
 
 
--- cantidad de victimas menores de edad heterosexuales
-SELECT COUNT(*) FROM victima, orientacionSexual WHERE victima.edad<18 AND orientacionSexual.nombre='Heterosexual'
+-- Consulta que muestra todos los datos necesarios para la tabla de victimas
+SELECT victima.run, victima.nombre, victima.apellido, victima.edad, orientacionSexual.nombre, victima.sexo 
+FROM victima, orientacionSexual WHERE orientacionSexual.id=victima.fk_genero
 GO
 
--- cantidad de victimas mayores de edad heterosexuales
-SELECT COUNT(*) FROM victima, orientacionSexual WHERE victima.edad>=18 AND orientacionSexual.nombre='Heterosexual'
-GO
+-- Consulta que muestra todos los datos necesarios para la tabla de perpetradores
+SELECT perpetrador.run, perpetrador.nombre, perpetrador.apellido, perpetrador.edad, orientacionSexual.nombre, perpetrador.sexo, perpetrador.cantidadDeDelitosCometidos
+ FROM perpetrador, orientacionSexual WHERE orientacionSexual.id=perpetrador.fk_genero
+ GO
 
 
--- cantidad de perpetradores mayores de edad heterosexuales
-SELECT COUNT(*) FROM perpetrador, orientacionSexual WHERE perpetrador.edad>=18 AND orientacionSexual.nombre='Heterosexual'
-GO
+-- Consulta que muestra todos los datos necesarios para la tabla de jueces
+SELECT juez.run, juez.nombre, juez.apellido, juez.edad,
+ orientacionSexual.nombre, juez.sexo, juez.cantidadDeSentenciasDictadas
+ FROM orientacionSexual, juez WHERE orientacionSexual.id=juez.fk_genero
+ GO
+
+
+
 
 -- cantidad de perpetradores menores de edad heterosexuales
 SELECT COUNT(*) FROM perpetrador, orientacionSexual WHERE perpetrador.edad<18 AND orientacionSexual.nombre='Heterosexual'

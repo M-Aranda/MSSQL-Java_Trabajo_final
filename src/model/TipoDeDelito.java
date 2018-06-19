@@ -10,12 +10,17 @@ package model;
  * @author Marce
  */
 public class TipoDeDelito {
+
     private int id;
     private String nombre;
 
     public TipoDeDelito(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
+    }
+
+    TipoDeDelito() {
+
     }
 
     public int getId() {
@@ -38,9 +43,5 @@ public class TipoDeDelito {
     public String toString() {
         return "TipoDeDelito{" + "id=" + id + ", nombre=" + nombre + '}';
     }
-    
-    
-    
-    
-    
+
 }

@@ -13,17 +13,17 @@ import javax.swing.table.TableModel;
  *
  * @author Marce
  */
-public class TMModelOrientacionSexual implements TableModel {
+public class TMModelTipoDeDelito implements TableModel {
 
-    private List<Genero> listaDeGeneros;
+    private List<TipoDeDelito> listadoDeTiposDeDelitos;
 
-    public TMModelOrientacionSexual(List<Genero> listaDeGeneros) {
-        this.listaDeGeneros = listaDeGeneros;
+    public TMModelTipoDeDelito(List<TipoDeDelito> listadoDeTiposDeDelitos) {
+        this.listadoDeTiposDeDelitos = listadoDeTiposDeDelitos;
     }
 
     @Override
     public int getRowCount() {
-        return listaDeGeneros.size();
+        return listadoDeTiposDeDelitos.size();
     }
 
     @Override
@@ -37,10 +37,11 @@ public class TMModelOrientacionSexual implements TableModel {
             case 0:
                 return "Id";
             case 1:
-                return "Nombre de orientacion";
+                return "Nombre de delito";
             default:
                 return null;
         }
+
     }
 
     @Override
@@ -63,13 +64,13 @@ public class TMModelOrientacionSexual implements TableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Genero g = listaDeGeneros.get(rowIndex);
+        TipoDeDelito tp = listadoDeTiposDeDelitos.get(rowIndex);
 
         switch (columnIndex) {
             case 0:
-                return g.getId();
+                return tp.getId();
             case 1:
-                return g.getNombre();
+                return tp.getNombre();
             default:
                 return null;
         }
@@ -90,5 +91,6 @@ public class TMModelOrientacionSexual implements TableModel {
     public void removeTableModelListener(TableModelListener l) {
         System.out.println("");
     }
+
 
 }

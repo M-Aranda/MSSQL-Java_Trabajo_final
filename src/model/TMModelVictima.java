@@ -13,42 +13,61 @@ import javax.swing.table.TableModel;
  *
  * @author Marce
  */
-public class TMModelOrientacionSexual implements TableModel {
+public class TMModelVictima implements TableModel {
 
-    private List<Genero> listaDeGeneros;
+    private List<Victima> victimas;
 
-    public TMModelOrientacionSexual(List<Genero> listaDeGeneros) {
-        this.listaDeGeneros = listaDeGeneros;
+    public TMModelVictima(List<Victima> victimas) {
+        this.victimas = victimas;
     }
+    
+    
 
     @Override
     public int getRowCount() {
-        return listaDeGeneros.size();
+        return victimas.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 2;
+        return 6;
     }
 
     @Override
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return "Id";
+                return "Run";
             case 1:
-                return "Nombre de orientacion";
+                return "Nombre";
+            case 2:
+                return "Apellido";
+            case 3:
+                return "Edad";
+            case 4:
+                return "Genero";
+            case 5:
+                return "Sexo";
             default:
                 return null;
         }
+
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return Integer.class;
+                return String.class;
             case 1:
+                return String.class;
+            case 2:
+                return String.class;
+            case 3:
+                return Integer.class;
+            case 4:
+                return String.class;
+            case 5:
                 return String.class;
             default:
                 return null;
@@ -63,13 +82,21 @@ public class TMModelOrientacionSexual implements TableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Genero g = listaDeGeneros.get(rowIndex);
+        Victima v = victimas.get(rowIndex);
 
         switch (columnIndex) {
             case 0:
-                return g.getId();
+                return v.getRun();
             case 1:
-                return g.getNombre();
+                return v.getNombre();
+            case 2:
+                return v.getApellido();
+            case 3:
+                return v.getEdad();
+            case 4:
+                return v.getGenero();
+            case 5:
+                return v.getSexo();
             default:
                 return null;
         }

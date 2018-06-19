@@ -15,16 +15,20 @@ public class Victima {
     private String nombre;
     private String apellido;
     private int edad;
-    private int fk_genero;
+    private String genero;
     private String sexo;
 
-    public Victima(String run, String nombre, String apellido, int edad, int fk_genero, String sexo) {
+    public Victima(String run, String nombre, String apellido, int edad, String fk_genero, String sexo) {
         this.run = run;
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
-        this.fk_genero = fk_genero;
+        this.genero = fk_genero;
         this.sexo = sexo;
+    }
+
+    Victima() {
+
     }
 
     public String getRun() {
@@ -59,12 +63,12 @@ public class Victima {
         this.edad = edad;
     }
 
-    public int getFk_genero() {
-        return fk_genero;
+    public String getGenero() {
+        return genero;
     }
 
-    public void setFk_genero(int fk_genero) {
-        this.fk_genero = fk_genero;
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
     public String getSexo() {
@@ -77,7 +81,14 @@ public class Victima {
 
     @Override
     public String toString() {
-        return "Victima{" + "run=" + run + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", fk_genero=" + fk_genero + ", sexo=" + sexo + '}';
+        return "Victima{" + "run=" + run + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", fk_genero=" + genero + ", sexo=" + sexo + '}';
     }
+
+    
+  
+
+    
+    
+
 
 }

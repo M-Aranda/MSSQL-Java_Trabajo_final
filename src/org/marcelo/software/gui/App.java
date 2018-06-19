@@ -10,14 +10,26 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import model.Data;
 import model.Genero;
+import model.Perpetrador;
 import model.TMModelOrientacionSexual;
+import model.TMModelPerpetrador;
+import model.TMModelTipoDeDelito;
+import model.TMModelVictima;
+import model.TipoDeDelito;
+import model.Victima;
 
 public class App extends javax.swing.JFrame {
 
     private Data d;
     private TMModelOrientacionSexual modelOrientacionSexual;
+    private TMModelTipoDeDelito modeloTipoDeDelito;
+    private TMModelVictima modelVictima;
+    private TMModelPerpetrador modelPerpetrador;
 
     private List<Genero> orientacionSexuales;
+    private List<TipoDeDelito> tiposDeDelito;
+    private List<Victima> listadoDeVictimas;
+    private List<Perpetrador> listadoDePerpetradores;
 
     public App() throws SQLException {
         initComponents();
@@ -29,15 +41,29 @@ public class App extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+        rbtSexoMasculinoPerpetrador.setSelected(true);
+        rbtSexoMasculinoJuez.setSelected(true);
+        rbtSexoMasculinoVictima.setSelected(true);
+
         cargarTablaOrientacionesSexuales();
+        cargarTablaTiposDeDelito();
+        cargarTablaVictimas();
+        cargarTablaPerpetradores();
 
     }
 
-    private void msgDeExito() {
+    private void msgDeRegistroExitoso() {
         String titulo = "Mensaje";
         String msg = "Registro exitoso";
         int tipo_msg = JOptionPane.INFORMATION_MESSAGE;
+        JOptionPane.showMessageDialog(null, msg, titulo, tipo_msg);
+    }
+
+    private void msgDatosIncorrectos() {
+        String titulo = "Error";
+        String msg = "Verificar datos";
+        int tipo_msg = JOptionPane.ERROR_MESSAGE;
         JOptionPane.showMessageDialog(null, msg, titulo, tipo_msg);
     }
 
@@ -59,10 +85,13 @@ public class App extends javax.swing.JFrame {
         txtRunPerpetrador = new javax.swing.JTextField();
         txtNombrePerpetrador = new javax.swing.JTextField();
         txtApellidoPerpetrador = new javax.swing.JTextField();
-        rbtSexoMasculino = new javax.swing.JRadioButton();
-        rbtSexoFemenino = new javax.swing.JRadioButton();
+        rbtSexoMasculinoPerpetrador = new javax.swing.JRadioButton();
+        rbtSexoFemeninoPerpetrador = new javax.swing.JRadioButton();
         txtGeneroPerpetrador = new javax.swing.JTextField();
         spnEdadPerpetrador = new javax.swing.JSpinner();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblPerpetrador = new javax.swing.JTable();
+        btnRegistrarPerpetrador = new javax.swing.JButton();
         pnlVictima = new javax.swing.JPanel();
         lblRunVictima = new javax.swing.JLabel();
         lblNombreVictima = new javax.swing.JLabel();
@@ -77,6 +106,9 @@ public class App extends javax.swing.JFrame {
         rbtSexoMasculinoVictima = new javax.swing.JRadioButton();
         rbtSexoFemeninoVictima = new javax.swing.JRadioButton();
         spnEdadVictima = new javax.swing.JSpinner();
+        btnRegistrarVictima = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblVictima = new javax.swing.JTable();
         pnlJuez = new javax.swing.JPanel();
         lblRunJuez = new javax.swing.JLabel();
         lblNombreJuez = new javax.swing.JLabel();
@@ -96,9 +128,13 @@ public class App extends javax.swing.JFrame {
         txtNombreOrientacionSexual = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrientacionSexual = new javax.swing.JTable();
+        btnIngresarOrientacionSexual = new javax.swing.JToggleButton();
         pnlTipoDeDelito = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombreTipoDeDelito = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblTipoDeDelito = new javax.swing.JTable();
+        btnRegistrarNombreTipoDeDelito = new javax.swing.JButton();
         pnlDelito = new javax.swing.JPanel();
         pnlCondena = new javax.swing.JPanel();
 
@@ -120,13 +156,33 @@ public class App extends javax.swing.JFrame {
 
         txtNombrePerpetrador.setText(" ");
 
-        btnGrPerpetrador.add(rbtSexoMasculino);
-        rbtSexoMasculino.setText("Masculino");
+        btnGrPerpetrador.add(rbtSexoMasculinoPerpetrador);
+        rbtSexoMasculinoPerpetrador.setText("Masculino");
 
-        btnGrPerpetrador.add(rbtSexoFemenino);
-        rbtSexoFemenino.setText("Femenino");
+        btnGrPerpetrador.add(rbtSexoFemeninoPerpetrador);
+        rbtSexoFemeninoPerpetrador.setText("Femenino");
 
         spnEdadPerpetrador.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
+
+        tblPerpetrador.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane4.setViewportView(tblPerpetrador);
+
+        btnRegistrarPerpetrador.setText("Registrar");
+        btnRegistrarPerpetrador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarPerpetradorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlPerpetradorLayout = new javax.swing.GroupLayout(pnlPerpetrador);
         pnlPerpetrador.setLayout(pnlPerpetradorLayout);
@@ -135,12 +191,6 @@ public class App extends javax.swing.JFrame {
             .addGroup(pnlPerpetradorLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlPerpetradorLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbtSexoMasculino)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbtSexoFemenino))
                     .addGroup(pnlPerpetradorLayout.createSequentialGroup()
                         .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPerpetradorLayout.createSequentialGroup()
@@ -151,7 +201,15 @@ public class App extends javax.swing.JFrame {
                                 .addGap(28, 28, 28)))
                         .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtRunPerpetrador, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                            .addComponent(txtNombrePerpetrador)))
+                            .addComponent(txtNombrePerpetrador))
+                        .addGap(41, 41, 41)
+                        .addComponent(btnRegistrarPerpetrador))
+                    .addGroup(pnlPerpetradorLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(rbtSexoMasculinoPerpetrador)
+                        .addGap(18, 18, 18)
+                        .addComponent(rbtSexoFemeninoPerpetrador))
                     .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(pnlPerpetradorLayout.createSequentialGroup()
                             .addComponent(lblGeneroPerpetrador)
@@ -168,7 +226,11 @@ public class App extends javax.swing.JFrame {
                             .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtApellidoPerpetrador)
                                 .addComponent(spnEdadPerpetrador, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)))))
-                .addContainerGap(376, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnlPerpetradorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pnlPerpetradorLayout.setVerticalGroup(
             pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,11 +239,16 @@ public class App extends javax.swing.JFrame {
                 .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRunPerpetrador)
                     .addComponent(txtRunPerpetrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombrePerpetrador)
-                    .addComponent(txtNombrePerpetrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPerpetradorLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNombrePerpetrador)
+                            .addComponent(txtNombrePerpetrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlPerpetradorLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(btnRegistrarPerpetrador)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblApellidoPerpetrador)
                     .addComponent(txtApellidoPerpetrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -196,9 +263,11 @@ public class App extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(rbtSexoMasculino)
-                    .addComponent(rbtSexoFemenino))
-                .addContainerGap(293, Short.MAX_VALUE))
+                    .addComponent(rbtSexoMasculinoPerpetrador)
+                    .addComponent(rbtSexoFemeninoPerpetrador))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(85, 85, 85))
         );
 
         tbpOpciones.addTab("Perpetrador", pnlPerpetrador);
@@ -223,6 +292,26 @@ public class App extends javax.swing.JFrame {
 
         spnEdadVictima.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
 
+        btnRegistrarVictima.setText("Registrar");
+        btnRegistrarVictima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarVictimaActionPerformed(evt);
+            }
+        });
+
+        tblVictima.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane3.setViewportView(tblVictima);
+
         javax.swing.GroupLayout pnlVictimaLayout = new javax.swing.GroupLayout(pnlVictima);
         pnlVictima.setLayout(pnlVictimaLayout);
         pnlVictimaLayout.setHorizontalGroup(
@@ -231,34 +320,39 @@ public class App extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlVictimaLayout.createSequentialGroup()
+                        .addGroup(pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlVictimaLayout.createSequentialGroup()
+                                    .addComponent(lblRunVictima)
+                                    .addGap(29, 29, 29)
+                                    .addComponent(txtRunVictima))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlVictimaLayout.createSequentialGroup()
+                                    .addComponent(lblNombreVictima)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtNombreVictima, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlVictimaLayout.createSequentialGroup()
+                                    .addComponent(lblGeneroDeVictima)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtGeneroVictima))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlVictimaLayout.createSequentialGroup()
+                                    .addGroup(pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblApellidoVictima)
+                                        .addComponent(lblEdadVictima))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtApellidoVictima)
+                                        .addComponent(spnEdadVictima, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)))))
+                        .addGap(41, 41, 41)
+                        .addComponent(btnRegistrarVictima))
+                    .addGroup(pnlVictimaLayout.createSequentialGroup()
                         .addComponent(lblSexoVictima)
                         .addGap(18, 18, 18)
                         .addComponent(rbtSexoMasculinoVictima)
                         .addGap(10, 10, 10)
                         .addComponent(rbtSexoFemeninoVictima))
-                    .addGroup(pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlVictimaLayout.createSequentialGroup()
-                            .addComponent(lblRunVictima)
-                            .addGap(29, 29, 29)
-                            .addComponent(txtRunVictima))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlVictimaLayout.createSequentialGroup()
-                            .addComponent(lblNombreVictima)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtNombreVictima, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlVictimaLayout.createSequentialGroup()
-                            .addComponent(lblGeneroDeVictima)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtGeneroVictima))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlVictimaLayout.createSequentialGroup()
-                            .addGroup(pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblApellidoVictima)
-                                .addComponent(lblEdadVictima))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtApellidoVictima)
-                                .addComponent(spnEdadVictima, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)))))
-                .addGap(299, 394, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
         pnlVictimaLayout.setVerticalGroup(
             pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,7 +360,8 @@ public class App extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRunVictima)
-                    .addComponent(txtRunVictima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRunVictima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegistrarVictima))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombreVictima)
@@ -278,7 +373,7 @@ public class App extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlVictimaLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtApellidoVictima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEdadVictima)
                     .addComponent(spnEdadVictima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -291,7 +386,9 @@ public class App extends javax.swing.JFrame {
                     .addComponent(lblSexoVictima)
                     .addComponent(rbtSexoMasculinoVictima)
                     .addComponent(rbtSexoFemeninoVictima))
-                .addContainerGap(306, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         tbpOpciones.addTab("Victima", pnlVictima);
@@ -355,7 +452,7 @@ public class App extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtRunJuez, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(59, 59, 59)))
-                .addContainerGap(383, Short.MAX_VALUE))
+                .addContainerGap(471, Short.MAX_VALUE))
         );
         pnlJuezLayout.setVerticalGroup(
             pnlJuezLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,7 +482,7 @@ public class App extends javax.swing.JFrame {
                     .addComponent(lblSexoJuez)
                     .addComponent(rbtSexoMasculinoJuez)
                     .addComponent(rbtSexoFemeninoJuez))
-                .addContainerGap(264, Short.MAX_VALUE))
+                .addContainerGap(339, Short.MAX_VALUE))
         );
 
         tbpOpciones.addTab("Juez", pnlJuez);
@@ -405,6 +502,13 @@ public class App extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblOrientacionSexual);
 
+        btnIngresarOrientacionSexual.setText("Ingresar");
+        btnIngresarOrientacionSexual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarOrientacionSexualActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlOrientacionSexualLayout = new javax.swing.GroupLayout(pnlOrientacionSexual);
         pnlOrientacionSexual.setLayout(pnlOrientacionSexualLayout);
         pnlOrientacionSexualLayout.setHorizontalGroup(
@@ -414,7 +518,9 @@ public class App extends javax.swing.JFrame {
                 .addComponent(lblNombreOrientacionSexual)
                 .addGap(18, 18, 18)
                 .addComponent(txtNombreOrientacionSexual, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnIngresarOrientacionSexual)
+                .addContainerGap(265, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrientacionSexualLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -423,18 +529,39 @@ public class App extends javax.swing.JFrame {
         pnlOrientacionSexualLayout.setVerticalGroup(
             pnlOrientacionSexualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlOrientacionSexualLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(25, 25, 25)
                 .addGroup(pnlOrientacionSexualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombreOrientacionSexual)
-                    .addComponent(txtNombreOrientacionSexual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombreOrientacionSexual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnIngresarOrientacionSexual))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(282, Short.MAX_VALUE))
+                .addContainerGap(355, Short.MAX_VALUE))
         );
 
         tbpOpciones.addTab("Orientacion Sexual", pnlOrientacionSexual);
 
         jLabel1.setText("Nombre tipo de delito:");
+
+        tblTipoDeDelito.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(tblTipoDeDelito);
+
+        btnRegistrarNombreTipoDeDelito.setText("Registrar");
+        btnRegistrarNombreTipoDeDelito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarNombreTipoDeDelitoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlTipoDeDelitoLayout = new javax.swing.GroupLayout(pnlTipoDeDelito);
         pnlTipoDeDelito.setLayout(pnlTipoDeDelitoLayout);
@@ -442,19 +569,29 @@ public class App extends javax.swing.JFrame {
             pnlTipoDeDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTipoDeDelitoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtNombreTipoDeDelito, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(233, Short.MAX_VALUE))
+                .addGroup(pnlTipoDeDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlTipoDeDelitoLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNombreTipoDeDelito, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRegistrarNombreTipoDeDelito)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlTipoDeDelitoLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                        .addGap(21, 21, 21))))
         );
         pnlTipoDeDelitoLayout.setVerticalGroup(
             pnlTipoDeDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTipoDeDelitoLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(33, 33, 33)
                 .addGroup(pnlTipoDeDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtNombreTipoDeDelito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(448, Short.MAX_VALUE))
+                    .addComponent(txtNombreTipoDeDelito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegistrarNombreTipoDeDelito))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tbpOpciones.addTab("Tipo de delito", pnlTipoDeDelito);
@@ -463,11 +600,11 @@ public class App extends javax.swing.JFrame {
         pnlDelito.setLayout(pnlDelitoLayout);
         pnlDelitoLayout.setHorizontalGroup(
             pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 602, Short.MAX_VALUE)
+            .addGap(0, 690, Short.MAX_VALUE)
         );
         pnlDelitoLayout.setVerticalGroup(
             pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
+            .addGap(0, 577, Short.MAX_VALUE)
         );
 
         tbpOpciones.addTab("Delito", pnlDelito);
@@ -476,11 +613,11 @@ public class App extends javax.swing.JFrame {
         pnlCondena.setLayout(pnlCondenaLayout);
         pnlCondenaLayout.setHorizontalGroup(
             pnlCondenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 602, Short.MAX_VALUE)
+            .addGap(0, 690, Short.MAX_VALUE)
         );
         pnlCondenaLayout.setVerticalGroup(
             pnlCondenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
+            .addGap(0, 577, Short.MAX_VALUE)
         );
 
         tbpOpciones.addTab("Condena", pnlCondena);
@@ -496,14 +633,130 @@ public class App extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(tbpOpciones)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(tbpOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresarOrientacionSexualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarOrientacionSexualActionPerformed
+
+        String nombre = txtNombreOrientacionSexual.getText();
+        try {
+            d.crearOrientacionSexual(nombre);
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        msgDeRegistroExitoso();
+
+        try {
+            cargarTablaOrientacionesSexuales();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        txtNombreOrientacionSexual.setText("");
+        txtNombreOrientacionSexual.requestFocus();
+    }//GEN-LAST:event_btnIngresarOrientacionSexualActionPerformed
+
+    private void btnRegistrarNombreTipoDeDelitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarNombreTipoDeDelitoActionPerformed
+        String nombre = txtNombreTipoDeDelito.getText();
+        try {
+            d.crearTipoDeDelito(nombre);
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        msgDeRegistroExitoso();
+
+        try {
+            cargarTablaTiposDeDelito();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        txtNombreTipoDeDelito.setText("");
+        txtNombreTipoDeDelito.requestFocus();
+
+    }//GEN-LAST:event_btnRegistrarNombreTipoDeDelitoActionPerformed
+
+    private void btnRegistrarVictimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarVictimaActionPerformed
+        String run = txtRunVictima.getText();
+        String nombre = txtNombreVictima.getText();
+        String apellido = txtApellidoVictima.getText();
+        int edad = (Integer) spnEdadVictima.getValue();
+        String genero = txtGeneroVictima.getText();
+        String sexo = "";
+        if (rbtSexoMasculinoVictima.isSelected()) {
+            sexo = "Masculino";
+        } else {
+            sexo = "Femenino";
+        }
+
+        try {
+            d.crearVictima(run, nombre, apellido, edad, genero, sexo);
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            msgDatosIncorrectos();
+
+        }
+
+        try {
+            cargarTablaVictimas();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        msgDeRegistroExitoso();
+        txtRunVictima.setText("");
+        txtNombreVictima.setText("");
+        txtApellidoVictima.setText("");
+        txtGeneroVictima.setText("");
+        rbtSexoMasculinoPerpetrador.setSelected(true);
+
+
+    }//GEN-LAST:event_btnRegistrarVictimaActionPerformed
+
+    private void btnRegistrarPerpetradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPerpetradorActionPerformed
+        String run = txtRunPerpetrador.getText();
+        String nombre = txtNombrePerpetrador.getText();
+        String apellido = txtApellidoPerpetrador.getText();
+        int edad = (Integer) spnEdadPerpetrador.getValue();
+        String genero = txtGeneroPerpetrador.getText();
+        String sexo = "";
+        if (rbtSexoMasculinoPerpetrador.isSelected()) {
+            sexo = "Masculino";
+        } else {
+            sexo = "Femenino";
+        }
+
+        try {
+            d.crearPerpetrador(run, nombre, apellido, edad, genero, sexo);
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            msgDatosIncorrectos();
+
+        }
+
+        try {
+            cargarTablaPerpetradores();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        msgDeRegistroExitoso();
+        txtRunPerpetrador.setText("");
+        txtNombrePerpetrador.setText("");
+        txtApellidoPerpetrador.setText("");
+        txtGeneroPerpetrador.setText("");
+        rbtSexoMasculinoPerpetrador.setSelected(true);
+
+
+    }//GEN-LAST:event_btnRegistrarPerpetradorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -513,6 +766,30 @@ public class App extends javax.swing.JFrame {
         orientacionSexuales = d.leerTodasLasOrientacionesSexuales();
         modelOrientacionSexual = new TMModelOrientacionSexual(orientacionSexuales);
         tblOrientacionSexual.setModel(modelOrientacionSexual);
+
+    }
+
+    private void cargarTablaTiposDeDelito() throws SQLException {
+        tiposDeDelito = new ArrayList();
+        tiposDeDelito = d.leerTodosLosTiposDeDelitos();
+        modeloTipoDeDelito = new TMModelTipoDeDelito(tiposDeDelito);
+        tblTipoDeDelito.setModel(modeloTipoDeDelito);
+
+    }
+
+    private void cargarTablaVictimas() throws SQLException {
+        listadoDeVictimas = new ArrayList();
+        listadoDeVictimas = d.leerTodasLasVictimas();
+        modelVictima = new TMModelVictima(listadoDeVictimas);
+        tblVictima.setModel(modelVictima);
+
+    }
+
+    private void cargarTablaPerpetradores() throws SQLException {
+        listadoDePerpetradores = new ArrayList();
+        listadoDePerpetradores = d.leerTodosLosPerpetradores();
+        modelPerpetrador = new TMModelPerpetrador(listadoDePerpetradores);
+        tblPerpetrador.setModel(modelPerpetrador);
 
     }
 
@@ -545,9 +822,16 @@ public class App extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btnGrJuez;
     private javax.swing.ButtonGroup btnGrPerpetrador;
     private javax.swing.ButtonGroup btnGrVictima;
+    private javax.swing.JToggleButton btnIngresarOrientacionSexual;
+    private javax.swing.JButton btnRegistrarNombreTipoDeDelito;
+    private javax.swing.JButton btnRegistrarPerpetrador;
+    private javax.swing.JButton btnRegistrarVictima;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblApellidoJuez;
     private javax.swing.JLabel lblApellidoPerpetrador;
     private javax.swing.JLabel lblApellidoVictima;
@@ -573,16 +857,19 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel pnlPerpetrador;
     private javax.swing.JPanel pnlTipoDeDelito;
     private javax.swing.JPanel pnlVictima;
-    private javax.swing.JRadioButton rbtSexoFemenino;
     private javax.swing.JRadioButton rbtSexoFemeninoJuez;
+    private javax.swing.JRadioButton rbtSexoFemeninoPerpetrador;
     private javax.swing.JRadioButton rbtSexoFemeninoVictima;
-    private javax.swing.JRadioButton rbtSexoMasculino;
     private javax.swing.JRadioButton rbtSexoMasculinoJuez;
+    private javax.swing.JRadioButton rbtSexoMasculinoPerpetrador;
     private javax.swing.JRadioButton rbtSexoMasculinoVictima;
     private javax.swing.JSpinner spnEdadJuez;
     private javax.swing.JSpinner spnEdadPerpetrador;
     private javax.swing.JSpinner spnEdadVictima;
     private javax.swing.JTable tblOrientacionSexual;
+    private javax.swing.JTable tblPerpetrador;
+    private javax.swing.JTable tblTipoDeDelito;
+    private javax.swing.JTable tblVictima;
     private javax.swing.JTabbedPane tbpOpciones;
     private javax.swing.JTextField txtApellidoJuez;
     private javax.swing.JTextField txtApellidoPerpetrador;

@@ -5,6 +5,7 @@
  */
 package model;
 
+
 import java.util.List;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -13,43 +14,64 @@ import javax.swing.table.TableModel;
  *
  * @author Marce
  */
-public class TMModelOrientacionSexual implements TableModel {
+public class TMModelPerpetrador implements TableModel {
 
-    private List<Genero> listaDeGeneros;
+    private List<Perpetrador> listadoDePerpetradores;
 
-    public TMModelOrientacionSexual(List<Genero> listaDeGeneros) {
-        this.listaDeGeneros = listaDeGeneros;
+    public TMModelPerpetrador(List<Perpetrador> listadoDePerpetradores) {
+        this.listadoDePerpetradores = listadoDePerpetradores;
     }
 
     @Override
     public int getRowCount() {
-        return listaDeGeneros.size();
+        return listadoDePerpetradores.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 2;
+        return 7;
     }
 
-    @Override
+        @Override
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return "Id";
+                return "Run";
             case 1:
-                return "Nombre de orientacion";
+                return "Nombre";
+            case 2:
+                return "Apellido";
+            case 3:
+                return "Edad";
+            case 4:
+                return "Genero";
+            case 5:
+                return "Sexo";
+            case 6:
+                return "# de delitos";
             default:
                 return null;
         }
+
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return Integer.class;
+                return String.class;
             case 1:
                 return String.class;
+            case 2:
+                return String.class;
+            case 3:
+                return Integer.class;
+            case 4:
+                return String.class;
+            case 5:
+                return String.class;
+            case 6:
+                return Integer.class;
             default:
                 return null;
         }
@@ -63,19 +85,29 @@ public class TMModelOrientacionSexual implements TableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Genero g = listaDeGeneros.get(rowIndex);
+        Perpetrador p = listadoDePerpetradores.get(rowIndex);
 
         switch (columnIndex) {
             case 0:
-                return g.getId();
+                return p.getRun();
             case 1:
-                return g.getNombre();
+                return p.getNombre();
+            case 2:
+                return p.getApellido();
+            case 3:
+                return p.getEdad();
+            case 4:
+                return p.getGenero();
+            case 5:
+                return p.getSexo();
+            case 6:
+                return p.getCantDelitos();
             default:
                 return null;
         }
 
     }
-
+    
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         System.out.println("");

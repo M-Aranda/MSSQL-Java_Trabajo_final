@@ -15,18 +15,22 @@ public class Perpetrador {
     private String nombre;
     private String apellido;
     private int edad;
-    private int fk_genero;
+    private String genero;
     private String sexo;
     private int cantDelitos;
 
-    public Perpetrador(String run, String nombre, String apellido, int edad, int fk_genero, String sexo, int cantDelitos) {
+    public Perpetrador(String run, String nombre, String apellido, int edad, String fk_genero, String sexo, int cantDelitos) {
         this.run = run;
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
-        this.fk_genero = fk_genero;
+        this.genero = fk_genero;
         this.sexo = sexo;
         this.cantDelitos = cantDelitos;
+    }
+
+    Perpetrador() {
+
     }
 
     public String getRun() {
@@ -61,12 +65,12 @@ public class Perpetrador {
         this.edad = edad;
     }
 
-    public int getFk_genero() {
-        return fk_genero;
+    public String getGenero() {
+        return genero;
     }
 
-    public void setFk_genero(int fk_genero) {
-        this.fk_genero = fk_genero;
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
     public String getSexo() {
@@ -87,7 +91,10 @@ public class Perpetrador {
 
     @Override
     public String toString() {
-        return "Perpetrador{" + "run=" + run + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", fk_genero=" + fk_genero + ", sexo=" + sexo + ", cantDelitos=" + cantDelitos + '}';
+        return "Perpetrador{" + "run=" + run + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", fk_genero=" + genero + ", sexo=" + sexo + ", cantDelitos=" + cantDelitos + '}';
     }
+    
+    
+
 
 }
