@@ -62,7 +62,7 @@ public class App extends javax.swing.JFrame {
         rbtSexoMasculinoJuez.setSelected(true);
         rbtSexoMasculinoVictima.setSelected(true);
 
-      cargarTODASlasTablas();
+        cargarTODASlasTablas();
 
         inicializarCboDelito();
 
@@ -132,6 +132,8 @@ public class App extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         tblPerpetrador = new javax.swing.JTable();
         btnRegistrarPerpetrador = new javax.swing.JButton();
+        btnActualizarPerpetrador = new javax.swing.JButton();
+        btnBorrarPerpetrador = new javax.swing.JButton();
         pnlVictima = new javax.swing.JPanel();
         lblRunVictima = new javax.swing.JLabel();
         lblNombreVictima = new javax.swing.JLabel();
@@ -172,12 +174,20 @@ public class App extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrientacionSexual = new javax.swing.JTable();
         btnIngresarOrientacionSexual = new javax.swing.JToggleButton();
+        btnActualizarNombreOrientacionSexual = new javax.swing.JButton();
+        btnBorrarOrientacionSexual = new javax.swing.JButton();
+        txtBorrarActualizarOrientacionSexual = new javax.swing.JTextField();
+        lblBorrarActualizarOrientacionSexual = new javax.swing.JLabel();
         pnlTipoDeDelito = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombreTipoDeDelito = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblTipoDeDelito = new javax.swing.JTable();
         btnRegistrarNombreTipoDeDelito = new javax.swing.JButton();
+        lblIDupDel = new javax.swing.JLabel();
+        txtActBorrTipoDeDelito = new javax.swing.JTextField();
+        btnActualizarTipoDeDelito = new javax.swing.JButton();
+        btnBorrarTipoDeDelito = new javax.swing.JButton();
         pnlDelito = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tblDelito = new javax.swing.JTable();
@@ -251,6 +261,20 @@ public class App extends javax.swing.JFrame {
             }
         });
 
+        btnActualizarPerpetrador.setText("Actualizar");
+        btnActualizarPerpetrador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarPerpetradorActionPerformed(evt);
+            }
+        });
+
+        btnBorrarPerpetrador.setText("Borrar");
+        btnBorrarPerpetrador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarPerpetradorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlPerpetradorLayout = new javax.swing.GroupLayout(pnlPerpetrador);
         pnlPerpetrador.setLayout(pnlPerpetradorLayout);
         pnlPerpetradorLayout.setHorizontalGroup(
@@ -259,40 +283,45 @@ public class App extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlPerpetradorLayout.createSequentialGroup()
-                        .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPerpetradorLayout.createSequentialGroup()
-                                .addComponent(lblNombrePerpetrador)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                            .addGroup(pnlPerpetradorLayout.createSequentialGroup()
-                                .addComponent(lblRunPerpetrador)
-                                .addGap(28, 28, 28)))
-                        .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtRunPerpetrador, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                            .addComponent(txtNombrePerpetrador))
-                        .addGap(41, 41, 41)
-                        .addComponent(btnRegistrarPerpetrador))
-                    .addGroup(pnlPerpetradorLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
                         .addComponent(rbtSexoMasculinoPerpetrador)
                         .addGap(18, 18, 18)
                         .addComponent(rbtSexoFemeninoPerpetrador))
-                    .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(pnlPerpetradorLayout.createSequentialGroup()
-                            .addComponent(lblGeneroPerpetrador)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtGeneroPerpetrador))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlPerpetradorLayout.createSequentialGroup()
-                            .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPerpetradorLayout.createSequentialGroup()
-                                    .addComponent(lblApellidoPerpetrador)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(pnlPerpetradorLayout.createSequentialGroup()
+                        .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPerpetradorLayout.createSequentialGroup()
+                                .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPerpetradorLayout.createSequentialGroup()
+                                        .addComponent(lblNombrePerpetrador)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                    .addGroup(pnlPerpetradorLayout.createSequentialGroup()
+                                        .addComponent(lblRunPerpetrador)
+                                        .addGap(28, 28, 28)))
+                                .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtRunPerpetrador, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                                    .addComponent(txtNombrePerpetrador)))
+                            .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(pnlPerpetradorLayout.createSequentialGroup()
-                                    .addComponent(lblEdadPerpetrador)
-                                    .addGap(23, 23, 23)))
-                            .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtApellidoPerpetrador)
-                                .addComponent(spnEdadPerpetrador, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)))))
+                                    .addComponent(lblGeneroPerpetrador)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtGeneroPerpetrador))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlPerpetradorLayout.createSequentialGroup()
+                                    .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPerpetradorLayout.createSequentialGroup()
+                                            .addComponent(lblApellidoPerpetrador)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                        .addGroup(pnlPerpetradorLayout.createSequentialGroup()
+                                            .addComponent(lblEdadPerpetrador)
+                                            .addGap(23, 23, 23)))
+                                    .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtApellidoPerpetrador)
+                                        .addComponent(spnEdadPerpetrador, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)))))
+                        .addGap(39, 39, 39)
+                        .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnActualizarPerpetrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRegistrarPerpetrador)
+                            .addComponent(btnBorrarPerpetrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(pnlPerpetradorLayout.createSequentialGroup()
                 .addContainerGap()
@@ -315,18 +344,25 @@ public class App extends javax.swing.JFrame {
                     .addGroup(pnlPerpetradorLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(btnRegistrarPerpetrador)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblApellidoPerpetrador)
-                    .addComponent(txtApellidoPerpetrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEdadPerpetrador)
-                    .addComponent(spnEdadPerpetrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblGeneroPerpetrador)
-                    .addComponent(txtGeneroPerpetrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPerpetradorLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblApellidoPerpetrador)
+                            .addComponent(txtApellidoPerpetrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEdadPerpetrador)
+                            .addComponent(spnEdadPerpetrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblGeneroPerpetrador)
+                            .addComponent(txtGeneroPerpetrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlPerpetradorLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(btnActualizarPerpetrador)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBorrarPerpetrador)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlPerpetradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -603,21 +639,55 @@ public class App extends javax.swing.JFrame {
             }
         });
 
+        btnActualizarNombreOrientacionSexual.setText("Actualizar");
+        btnActualizarNombreOrientacionSexual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarNombreOrientacionSexualActionPerformed(evt);
+            }
+        });
+
+        btnBorrarOrientacionSexual.setText("Borrrar");
+        btnBorrarOrientacionSexual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarOrientacionSexualActionPerformed(evt);
+            }
+        });
+
+        txtBorrarActualizarOrientacionSexual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBorrarActualizarOrientacionSexualActionPerformed(evt);
+            }
+        });
+
+        lblBorrarActualizarOrientacionSexual.setText("Id a borrar/actualizar");
+
         javax.swing.GroupLayout pnlOrientacionSexualLayout = new javax.swing.GroupLayout(pnlOrientacionSexual);
         pnlOrientacionSexual.setLayout(pnlOrientacionSexualLayout);
         pnlOrientacionSexualLayout.setHorizontalGroup(
             pnlOrientacionSexualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlOrientacionSexualLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblNombreOrientacionSexual)
-                .addGap(18, 18, 18)
-                .addComponent(txtNombreOrientacionSexual, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlOrientacionSexualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlOrientacionSexualLayout.createSequentialGroup()
+                        .addComponent(lblNombreOrientacionSexual)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrientacionSexualLayout.createSequentialGroup()
+                        .addComponent(lblBorrarActualizarOrientacionSexual)
+                        .addGap(26, 26, 26)))
+                .addGroup(pnlOrientacionSexualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNombreOrientacionSexual, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                    .addComponent(txtBorrarActualizarOrientacionSexual))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnIngresarOrientacionSexual)
-                .addContainerGap(296, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrientacionSexualLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlOrientacionSexualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlOrientacionSexualLayout.createSequentialGroup()
+                        .addGroup(pnlOrientacionSexualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnActualizarNombreOrientacionSexual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBorrarOrientacionSexual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlOrientacionSexualLayout.createSequentialGroup()
+                        .addComponent(btnIngresarOrientacionSexual)
+                        .addGap(0, 286, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlOrientacionSexualLayout.setVerticalGroup(
@@ -629,7 +699,18 @@ public class App extends javax.swing.JFrame {
                     .addComponent(txtNombreOrientacionSexual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnIngresarOrientacionSexual))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlOrientacionSexualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlOrientacionSexualLayout.createSequentialGroup()
+                        .addGroup(pnlOrientacionSexualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnActualizarNombreOrientacionSexual)
+                            .addGroup(pnlOrientacionSexualLayout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addGroup(pnlOrientacionSexualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtBorrarActualizarOrientacionSexual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblBorrarActualizarOrientacionSexual))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBorrarOrientacionSexual)))
                 .addContainerGap(355, Short.MAX_VALUE))
         );
 
@@ -657,6 +738,22 @@ public class App extends javax.swing.JFrame {
             }
         });
 
+        lblIDupDel.setText("Id a actualizar/borrar:");
+
+        btnActualizarTipoDeDelito.setText("Actualizar");
+        btnActualizarTipoDeDelito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarTipoDeDelitoActionPerformed(evt);
+            }
+        });
+
+        btnBorrarTipoDeDelito.setText("Borrar");
+        btnBorrarTipoDeDelito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarTipoDeDelitoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlTipoDeDelitoLayout = new javax.swing.GroupLayout(pnlTipoDeDelito);
         pnlTipoDeDelito.setLayout(pnlTipoDeDelitoLayout);
         pnlTipoDeDelitoLayout.setHorizontalGroup(
@@ -665,27 +762,43 @@ public class App extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlTipoDeDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTipoDeDelitoLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNombreTipoDeDelito, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnRegistrarNombreTipoDeDelito)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlTipoDeDelitoLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
-                        .addGap(21, 21, 21))))
+                        .addGap(21, 21, 21))
+                    .addGroup(pnlTipoDeDelitoLayout.createSequentialGroup()
+                        .addGroup(pnlTipoDeDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(pnlTipoDeDelitoLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtNombreTipoDeDelito, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlTipoDeDelitoLayout.createSequentialGroup()
+                                .addComponent(lblIDupDel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtActBorrTipoDeDelito)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlTipoDeDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnRegistrarNombreTipoDeDelito)
+                            .addComponent(btnActualizarTipoDeDelito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBorrarTipoDeDelito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         pnlTipoDeDelitoLayout.setVerticalGroup(
             pnlTipoDeDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTipoDeDelitoLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addContainerGap()
                 .addGroup(pnlTipoDeDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNombreTipoDeDelito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegistrarNombreTipoDeDelito))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlTipoDeDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblIDupDel)
+                    .addComponent(txtActBorrTipoDeDelito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnActualizarTipoDeDelito))
+                .addGap(3, 3, 3)
+                .addComponent(btnBorrarTipoDeDelito)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
 
         tbpOpciones.addTab("Tipo de delito", pnlTipoDeDelito);
@@ -969,7 +1082,7 @@ public class App extends javax.swing.JFrame {
         }
         txtNombreTipoDeDelito.setText("");
         txtNombreTipoDeDelito.requestFocus();
-          try {
+        try {
             cargarTablaInforme();
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
@@ -1010,7 +1123,7 @@ public class App extends javax.swing.JFrame {
         txtApellidoVictima.setText("");
         txtGeneroVictima.setText("");
         rbtSexoMasculinoPerpetrador.setSelected(true);
-          try {
+        try {
             cargarTablaInforme();
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
@@ -1052,7 +1165,7 @@ public class App extends javax.swing.JFrame {
         txtApellidoPerpetrador.setText("");
         txtGeneroPerpetrador.setText("");
         rbtSexoMasculinoPerpetrador.setSelected(true);
-          try {
+        try {
             cargarTablaInforme();
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
@@ -1095,7 +1208,7 @@ public class App extends javax.swing.JFrame {
         txtGeneroJuez.setText("");
         rbtSexoMasculinoJuez.setSelected(true);
 
-          try {
+        try {
             cargarTablaInforme();
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
@@ -1134,7 +1247,7 @@ public class App extends javax.swing.JFrame {
         txtRunVictimaDelito.setText("");
         txtDetalleDelito.setText("");
         txtFechaDelito.setText("");
-          try {
+        try {
             cargarTablaInforme();
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
@@ -1167,7 +1280,7 @@ public class App extends javax.swing.JFrame {
 
         txtRunJuezCondena.setText("");
         txtIdDelitoJuez.setText("");
-          try {
+        try {
             cargarTablaInforme();
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
@@ -1175,6 +1288,172 @@ public class App extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnRegistrarCondenaActionPerformed
+
+    private void btnActualizarNombreOrientacionSexualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarNombreOrientacionSexualActionPerformed
+        int id = Integer.parseInt(txtBorrarActualizarOrientacionSexual.getText());
+        String nuevoNombre = txtNombreOrientacionSexual.getText();
+
+        try {
+            d.actualizarOrientacionSexual(id, nuevoNombre);
+            msgDeOperacionExitosa();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            msgDatosIncorrectos();
+        }
+
+        try {
+            cargarTablaOrientacionesSexuales();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        txtNombreOrientacionSexual.setText("");
+        txtBorrarActualizarOrientacionSexual.setText("");
+
+
+    }//GEN-LAST:event_btnActualizarNombreOrientacionSexualActionPerformed
+
+    private void txtBorrarActualizarOrientacionSexualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBorrarActualizarOrientacionSexualActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBorrarActualizarOrientacionSexualActionPerformed
+
+    private void btnBorrarOrientacionSexualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarOrientacionSexualActionPerformed
+
+        int id = Integer.parseInt(txtBorrarActualizarOrientacionSexual.getText());
+
+        try {
+            d.borrarOrientacionSexual(id);
+            msgDeOperacionExitosa();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            msgDatosIncorrectos();
+        }
+
+        try {
+            cargarTablaOrientacionesSexuales();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        txtNombreOrientacionSexual.setText("");
+        txtBorrarActualizarOrientacionSexual.setText("");
+
+
+    }//GEN-LAST:event_btnBorrarOrientacionSexualActionPerformed
+
+    private void btnActualizarTipoDeDelitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarTipoDeDelitoActionPerformed
+        int id = Integer.parseInt(txtActBorrTipoDeDelito.getText());
+        String nuevoNombre = txtNombreTipoDeDelito.getText();
+
+        try {
+            d.actualizarTipoDeDelito(id, nuevoNombre);
+            msgDeOperacionExitosa();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            msgDatosIncorrectos();
+        }
+
+        try {
+            cargarTablaTiposDeDelito();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        txtActBorrTipoDeDelito.setText("");
+        txtNombreTipoDeDelito.setText("");
+
+
+    }//GEN-LAST:event_btnActualizarTipoDeDelitoActionPerformed
+
+    private void btnBorrarTipoDeDelitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarTipoDeDelitoActionPerformed
+        int id = Integer.parseInt(txtActBorrTipoDeDelito.getText());
+
+        try {
+            d.borrarTipoDeDelito(id);
+            msgDeOperacionExitosa();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            msgDatosIncorrectos();
+        }
+
+        try {
+            cargarTablaTiposDeDelito();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        txtActBorrTipoDeDelito.setText("");
+        txtNombreTipoDeDelito.setText("");
+
+
+    }//GEN-LAST:event_btnBorrarTipoDeDelitoActionPerformed
+
+    private void btnActualizarPerpetradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarPerpetradorActionPerformed
+        String rut = txtRunPerpetrador.getText();
+        String nombre = txtNombrePerpetrador.getText();
+        String apellido = txtApellidoPerpetrador.getText();
+        int edad = (int) spnEdadPerpetrador.getValue();
+        String genero = txtGeneroPerpetrador.getText();
+        String sexo = "";
+
+        if (rbtSexoMasculinoPerpetrador.isSelected()) {
+            sexo = "Masculino";
+        } else {
+            sexo = "Femenino";
+        }
+
+        try {
+            d.actualizarPerpetrador(rut, nombre, apellido, edad, genero, sexo);
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            msgDatosIncorrectos();
+        }
+
+        try {
+            cargarTablaPerpetradores();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        txtRunPerpetrador.setText("");
+        txtNombrePerpetrador.setText("");
+        txtApellidoPerpetrador.setText("");
+        txtGeneroPerpetrador.setText("");
+
+    }//GEN-LAST:event_btnActualizarPerpetradorActionPerformed
+
+    private void btnBorrarPerpetradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarPerpetradorActionPerformed
+        String rut = txtRunPerpetrador.getText();
+        String nombre = txtNombrePerpetrador.getText();
+        String apellido = txtApellidoPerpetrador.getText();
+        int edad = (int) spnEdadPerpetrador.getValue();
+        String genero = txtGeneroPerpetrador.getText();
+        String sexo = "";
+
+        if (rbtSexoMasculinoPerpetrador.isSelected()) {
+            sexo = "Masculino";
+        } else {
+            sexo = "Femenino";
+        }
+
+        try {
+            d.borrarPerpetrador(rut, nombre, apellido, edad, genero, sexo);
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            msgDatosIncorrectos();
+        }
+
+        try {
+            cargarTablaPerpetradores();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        txtRunPerpetrador.setText("");
+        txtNombrePerpetrador.setText("");
+        txtApellidoPerpetrador.setText("");
+        txtGeneroPerpetrador.setText("");
+    }//GEN-LAST:event_btnBorrarPerpetradorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1268,6 +1547,12 @@ public class App extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizarNombreOrientacionSexual;
+    private javax.swing.JButton btnActualizarPerpetrador;
+    private javax.swing.JButton btnActualizarTipoDeDelito;
+    private javax.swing.JButton btnBorrarOrientacionSexual;
+    private javax.swing.JButton btnBorrarPerpetrador;
+    private javax.swing.JButton btnBorrarTipoDeDelito;
     private javax.swing.ButtonGroup btnGrJuez;
     private javax.swing.ButtonGroup btnGrPerpetrador;
     private javax.swing.ButtonGroup btnGrVictima;
@@ -1292,6 +1577,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel lblApellidoJuez;
     private javax.swing.JLabel lblApellidoPerpetrador;
     private javax.swing.JLabel lblApellidoVictima;
+    private javax.swing.JLabel lblBorrarActualizarOrientacionSexual;
     private javax.swing.JLabel lblDetalleDelito;
     private javax.swing.JLabel lblEdadJuez;
     private javax.swing.JLabel lblEdadPerpetrador;
@@ -1300,6 +1586,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel lblGeneroDeVictima;
     private javax.swing.JLabel lblGeneroJuez;
     private javax.swing.JLabel lblGeneroPerpetrador;
+    private javax.swing.JLabel lblIDupDel;
     private javax.swing.JLabel lblIdDelitoCondena;
     private javax.swing.JLabel lblNombreJuez;
     private javax.swing.JLabel lblNombreOrientacionSexual;
@@ -1341,9 +1628,11 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JTable tblTop3Criminales;
     private javax.swing.JTable tblVictima;
     private javax.swing.JTabbedPane tbpOpciones;
+    private javax.swing.JTextField txtActBorrTipoDeDelito;
     private javax.swing.JTextField txtApellidoJuez;
     private javax.swing.JTextField txtApellidoPerpetrador;
     private javax.swing.JTextField txtApellidoVictima;
+    private javax.swing.JTextField txtBorrarActualizarOrientacionSexual;
     private javax.swing.JTextField txtDetalleDelito;
     private javax.swing.JTextField txtFechaDelito;
     private javax.swing.JTextField txtGeneroJuez;
