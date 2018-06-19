@@ -318,141 +318,6 @@ CREATE PROCEDURE CRUDCondena(@id INT,@fk_juez VARCHAR(20), @fk_delito INT , @tip
 	GO	
 
 
-EXEC CRUDtipoDelito 1,'Violación',1
-EXEC CRUDtipoDelito 1,'Estupro',1
-EXEC CRUDtipoDelito 1,'Abuso Sexual',1
-EXEC CRUDtipoDelito 1,'Producción de material pornográfico infantil',1
-EXEC CRUDtipoDelito 1,'Comercialización de material pornográfico infantil',1
-EXEC CRUDtipoDelito 1,'Favorecimiento de la prostitución de menores',1
-GO
-
-EXEC CRUDorientacionSexual 1,'Heterosexual',1
-EXEC CRUDorientacionSexual 1,'Homosexual',1
-EXEC CRUDorientacionSexual 1,'Bisexual',1
-EXEC CRUDorientacionSexual 1,'Transexual',1
-EXEC CRUDorientacionSexual 1,'Asexual',1
-EXEC CRUDorientacionSexual 1,'Pansexual',1
-EXEC CRUDorientacionSexual 1,'Antrosexual',1
-EXEC CRUDorientacionSexual 1,'Demisexual',1
-EXEC CRUDorientacionSexual 1,'Sapiosexual',1
-EXEC CRUDorientacionSexual 1,'Graysexual',1
-EXEC CRUDorientacionSexual 1,'Metrosexual',1
-EXEC CRUDorientacionSexual 1,'Spornosexual',1
-EXEC CRUDorientacionSexual 1,'Autosexual',1
-GO
-
-
-
-EXEC CRUDVictima'12343133-1','Fulanita','Del Solar',17,'Heterosexual','Mujer',1
-EXEC CRUDVictima'1032088-1','Fulanita','Del Solar',17,'Heterosexual','Mujer',1
-GO
-
-EXEC CRUDperpetrador'20896688-1','Pedro','Jorquera',33,'Heterosexual','Hombre',0,1
-GO
-
-EXEC CRUDjuez'33898088-1','Fernando','Vibemas',65,'Homosexual','Hombre',0,1
-GO
-
-
-EXEC CRUDDelito 1,1,'20896688-1','1032088-1','Victima sufrio el delito por 3 horas','2016-06-06',1
-GO
-
-
-EXEC CRUDCondena 1,'33898088-1',1,1
-GO
-
-/*Hasta aqui debiese estar todo bien (Los Trigger tambien funcionan)*/
-
-
-
-
-
-CREATE PROCEDURE crearInformeDeDenunciasHastaLaFecha @informe VARCHAR(MAX) AS --DROP PROCEDURE  crearInformeDeDenunciasHastaLaFecha
-BEGIN
-	DECLARE @texto VARCHAR(MAX)
-	
-	DECLARE @run_victima VARCHAR (20)
-	DECLARE @edad_victima INT
-
-	SET @texto=''
-
-	DECLARE cursor_informe CURSOR
-		FOR (SELECT run, edad FROM victima)
-
-	OPEN cursor_informe
-
-	FETCH NEXT FROM cursor_informe
-		INTO @run_victima, @edad_victima -- count = 0
-
-
-	WHILE @@FETCH_STATUS=0
-	BEGIN
-		IF @edad_victima<18
-			/*PRINT CONCAT(@run_victima,' es menor de edad')*/
-			SET @texto=CONCAT(@texto, @run_victima, ' es menor de edad ')
-
-		
-
-		FETCH NEXT FROM cursor_informe
-			INTO @run_victima, @edad_victima -- count += 1
-	END
-
-	
-
-	CLOSE cursor_informe
-	DEALLOCATE cursor_informe
-END
-SELECT @texto AS 'Texto'
-
-	GO
-
-EXEC crearInformeDeDenunciasHastaLaFecha 'oka'
-INSERT INTO delito (tipo_delito_fk,fk_perpetrador, fk_victima, detalle, fecha_delito) VALUES (1,'20896688-1','10898088-1','Se toma constancia de que la victima asegura haber estado a merced del perpetrador durante un periodo de 3 horas','03-03-2000')
-GO
-
-
-
-/*FUNCIONES*/
-
-/*
-Funcion que muestra la cantidad de condenas hechas por un determinado juez
-*/
-CREATE FUNCTION cantidadDeCondenasDictadasPorUnJuez (@run_de_juez VARCHAR(20)) RETURNS INT AS
- BEGIN
-	 RETURN (SELECT COUNT(*) FROM juez WHERE run=@run_de_juez)
-END
-
-GO
-
-PRINT dbo.cantidadDeCondenasDictadasPorUnJuez('30898088-1')
-
-/* CONSULTAS */
-
-
--- cantidad de victimas menores de edad heterosexuales
-SELECT COUNT(*) FROM victima, orientacionSexual WHERE victima.edad<18 AND orientacionSexual.nombre='Heterosexual'
-GO
-
--- cantidad de victimas mayores de edad heterosexuales
-SELECT COUNT(*) FROM victima, orientacionSexual WHERE victima.edad>=18 AND orientacionSexual.nombre='Heterosexual'
-GO
-
-
--- cantidad de perpetradores mayores de edad heterosexuales
-SELECT COUNT(*) FROM perpetrador, orientacionSexual WHERE perpetrador.edad>=18 AND orientacionSexual.nombre='Heterosexual'
-GO
-
--- cantidad de perpetradores menores de edad heterosexuales
-SELECT COUNT(*) FROM perpetrador, orientacionSexual WHERE perpetrador.edad<18 AND orientacionSexual.nombre='Heterosexual'
-GO
-
-
--- cantidad de condenas a un perpetrador, en donde la victima es un menor de edad
-SELECT COUNT (*) FROM condena, delito, victima WHERE condena.fk_delito=delito.id AND delito.fk_victima=victima.run AND victima.edad<18
-GO
-
-
-
 
 /*TRIGGERS*/
 
@@ -509,6 +374,198 @@ SET @runJuez=(SELECT juez.run FROM condena, juez WHERE condena.fk_juez=juez.run 
 
 UPDATE juez SET cantidadDeSentenciasDictadas=(@cantidadActualDeCondenas+1) WHERE run=@runJuez
 GO
+
+
+EXEC CRUDtipoDelito 1,'Violación',1
+EXEC CRUDtipoDelito 1,'Estupro',1
+EXEC CRUDtipoDelito 1,'Abuso Sexual',1
+EXEC CRUDtipoDelito 1,'Producción de material pornográfico infantil',1
+EXEC CRUDtipoDelito 1,'Comercialización de material pornográfico infantil',1
+EXEC CRUDtipoDelito 1,'Favorecimiento de la prostitución de menores',1
+GO
+
+EXEC CRUDorientacionSexual 1,'Heterosexual',1
+EXEC CRUDorientacionSexual 1,'Homosexual',1
+EXEC CRUDorientacionSexual 1,'Bisexual',1
+EXEC CRUDorientacionSexual 1,'Transexual',1
+EXEC CRUDorientacionSexual 1,'Asexual',1
+EXEC CRUDorientacionSexual 1,'Pansexual',1
+EXEC CRUDorientacionSexual 1,'Antrosexual',1
+EXEC CRUDorientacionSexual 1,'Demisexual',1
+EXEC CRUDorientacionSexual 1,'Sapiosexual',1
+EXEC CRUDorientacionSexual 1,'Graysexual',1
+EXEC CRUDorientacionSexual 1,'Metrosexual',1
+EXEC CRUDorientacionSexual 1,'Spornosexual',1
+EXEC CRUDorientacionSexual 1,'Autosexual',1
+GO
+
+
+
+EXEC CRUDVictima'12343133-4','Fulanita','Del Solar',17,'Heterosexual','Mujer',1
+EXEC CRUDVictima'1232088-1','Constanza','Benavides',25,'Heterosexual','Mujer',1
+EXEC CRUDVictima'1332088-3','Marcela','Constantine',33,'Pansexual','Mujer',1
+EXEC CRUDVictima'1772088-1','Juan','Barcazar',16,'Heterosexual','Hombre',1
+EXEC CRUDVictima'1882088-2','Paula','Jorquera',17,'Heterosexual','Mujer',1
+GO
+
+EXEC CRUDperpetrador'20896688-1','Pedro','Jorquera',26,'Heterosexual','Hombre',0,1
+EXEC CRUDperpetrador'20896688-7','Terry','Smoke',17,'Heterosexual','Hombre',0,1
+EXEC CRUDperpetrador'20897788-1','Pedro','Jorquera',24,'Pansexual','Hombre',0,1
+EXEC CRUDperpetrador'20898888-6','Naomi','Kurasawa',16,'Heterosexual','Mujer',0,1
+EXEC CRUDperpetrador'20896998-3','Bianca','Maguilar',23,'Bisexual','Mujer',0,1
+GO
+
+EXEC CRUDjuez'33898088-1','Francisca','Fimel',65,'Homosexual','Mujer',0,1
+EXEC CRUDjuez'33898084-1','Katherine','Kramer',68,'Heterosexual','Mujer',0,1
+EXEC CRUDjuez'33898085-1','Javier','Vibemas',60,'Heterosexual','Hombre',0,1
+EXEC CRUDjuez'33898086-1','Mauricio','Lepes',55,'Homosexual','Hombre',0,1
+EXEC CRUDjuez'33898087-1','Agustin','Pastorino',57,'Homosexual','Hombre',0,1
+GO
+
+
+EXEC CRUDDelito 1,1,'20896688-1','12343133-4','Victima sufrio el delito por 3 horas','2016-06-10',1
+EXEC CRUDDelito 1,2,'20896688-7','1232088-1','Victima sufrio el delito por 2 horas','2015-05-12',1
+EXEC CRUDDelito 1,3,'20897788-1','1332088-3','Victima sufrio el delito por 1 hora','2013-09-08',1
+EXEC CRUDDelito 1,4,'20898888-6','1772088-1','Victima no denuncio antes por verguenza','2017-01-07',1
+EXEC CRUDDelito 1,5,'20896998-3','1882088-2','Victima internada en clinica mental','2016-02-09',1
+EXEC CRUDDelito 1,5,'20896998-3','1772088-1','Victima internada en clinica mental','2016-04-09',1
+GO
+
+
+EXEC CRUDCondena 1,'33898088-1',1,1
+EXEC CRUDCondena 1,'33898084-1',2,1
+EXEC CRUDCondena 1,'33898085-1',3,1
+EXEC CRUDCondena 1,'33898086-1',4,1
+EXEC CRUDCondena 1,'33898087-1',5,1
+GO
+
+
+/*FUNCIONES*/
+
+/*
+Funcion que muestra la suma de los anios antes de que preeescriban los delitos de un perpetrador
+(para propositos de conveniencia de SW, se simula que 2 o mas delitos no
+tienen tiempo de preescripcion independiente)
+*/
+CREATE FUNCTION [dbo].[calcularCantidadDeAniosAntesDeQueTodosLosDelitosPreescriban] (@runDePerpetrador VARCHAR(20)) RETURNS INT AS --DROP FUNCTION calcularCantidadDeAniosAntesDeQueTodosLosDelitosPreescriban
+ BEGIN
+
+ DECLARE @aniosAcumulados INT
+ DECLARE @aniosEnEstaIteracion INT
+ DECLARE cursorAnios CURSOR
+
+
+
+ FOR (SELECT delito.aniosAntesDePreescribir FROM delito,perpetrador WHERE perpetrador.run=delito.fk_perpetrador AND perpetrador.run=@runDePerpetrador)
+	OPEN cursorAnios
+
+	FETCH NEXT FROM cursorAnios
+		INTO @aniosEnEstaIteracion
+		SET @aniosAcumulados=0+@aniosEnEstaIteracion
+
+
+	WHILE @@FETCH_STATUS=0
+	BEGIN
+		FETCH NEXT FROM cursorAnios
+			INTO @aniosEnEstaIteracion 
+			SET @aniosAcumulados=@aniosAcumulados+@aniosEnEstaIteracion
+	END
+
+	SET @aniosAcumulados=@aniosAcumulados-@aniosEnEstaIteracion -- Si no agrego esta linea itera una vez mas el ultimo item
+
+	CLOSE cursorAnios
+	DEALLOCATE cursorAnios
+
+
+
+
+	 RETURN @aniosAcumulados
+END
+
+GO
+
+
+/* Procedimeinto que determina una cantidad de n de perpetradores
+ mas peligrosos basandose en la cantidad de anios antes de que preescriban
+ sus delitos acumulados */
+CREATE PROCEDURE [dbo].[determinarTOPNperpetradoresMasPeligrosos] @cantidadTOPNperpetradores INT AS --DROP PROCEDURE  determinarTOPNperpetradoresMasPeligrosos
+BEGIN
+	
+	CREATE TABLE #tablaTemporal (id UNIQUEIDENTIFIER,run VARCHAR (20),cantDelitos INT, aniosAcumulados INT, PRIMARY KEY(id))
+	DECLARE @run_perpetrador VARCHAR (20)
+	DECLARE @cantDelitos INT
+	DECLARE @aniosAcumulados INT
+
+	DECLARE @nPerp INT
+	SET @nPerp=@cantidadTOPNperpetradores
+
+	DECLARE cursor_informe CURSOR
+		FOR (SELECT run, cantidadDeDelitosCometidos FROM perpetrador)
+
+
+
+	OPEN cursor_informe
+
+	FETCH NEXT FROM cursor_informe
+		INTO @run_perpetrador, @cantDelitos 
+		SET @aniosAcumulados=(SELECT [dbo].[calcularCantidadDeAniosAntesDeQueTodosLosDelitosPreescriban](@run_perpetrador))
+		INSERT INTO #tablaTemporal VALUES (NEWID(),@run_perpetrador,@cantDelitos, @aniosAcumulados)
+
+
+	WHILE @@FETCH_STATUS=0
+	BEGIN
+
+		FETCH NEXT FROM cursor_informe
+			INTO @run_perpetrador, @cantDelitos 
+			SET @aniosAcumulados=(SELECT [dbo].[calcularCantidadDeAniosAntesDeQueTodosLosDelitosPreescriban](@run_perpetrador))
+			INSERT INTO #tablaTemporal VALUES (NEWID(),@run_perpetrador,@cantDelitos, @aniosAcumulados)
+
+	END
+
+	CLOSE cursor_informe
+	DEALLOCATE cursor_informe
+
+	SELECT TOP (@nPerp) run AS 'RUT', cantDelitos AS 'Cantidad de delitos',aniosAcumulados AS 'Anios acumulados' FROM #tablaTemporal ORDER BY aniosAcumulados DESC
+
+	END
+	GO
+
+
+EXEC determinarTOPNperpetradoresMasPeligrosos 3
+
+
+
+/*Hasta aqui debiese estar todo bien */
+
+
+
+
+/* CONSULTAS */
+
+
+-- cantidad de victimas menores de edad heterosexuales
+SELECT COUNT(*) FROM victima, orientacionSexual WHERE victima.edad<18 AND orientacionSexual.nombre='Heterosexual'
+GO
+
+-- cantidad de victimas mayores de edad heterosexuales
+SELECT COUNT(*) FROM victima, orientacionSexual WHERE victima.edad>=18 AND orientacionSexual.nombre='Heterosexual'
+GO
+
+
+-- cantidad de perpetradores mayores de edad heterosexuales
+SELECT COUNT(*) FROM perpetrador, orientacionSexual WHERE perpetrador.edad>=18 AND orientacionSexual.nombre='Heterosexual'
+GO
+
+-- cantidad de perpetradores menores de edad heterosexuales
+SELECT COUNT(*) FROM perpetrador, orientacionSexual WHERE perpetrador.edad<18 AND orientacionSexual.nombre='Heterosexual'
+GO
+
+
+-- cantidad de condenas a un perpetrador, en donde la victima es un menor de edad
+SELECT COUNT (*) FROM condena, delito, victima WHERE condena.fk_delito=delito.id AND delito.fk_victima=victima.run AND victima.edad<18
+GO
+
+
 
 
 
