@@ -10,7 +10,7 @@ package model;
  * @author Marce
  */
 public class Delito {
-    
+
     private int id;
     private int fk_delito;
     private String fk_perpetrador;
@@ -29,6 +29,10 @@ public class Delito {
         this.fecha_delito = fecha_delito;
         this.fecha_denuncia = fecha_denuncia;
         this.aniosAntesDePreescribir = aniosAntesDePreescribir;
+    }
+
+    Delito() {
+
     }
 
     public int getId() {
@@ -99,8 +103,5 @@ public class Delito {
     public String toString() {
         return "Delito{" + "id=" + id + ", fk_delito=" + fk_delito + ", fk_perpetrador=" + fk_perpetrador + ", fk_victima=" + fk_victima + ", detalle=" + detalle + ", fecha_delito=" + fecha_delito + ", fecha_denuncia=" + fecha_denuncia + ", aniosAntesDePreescribir=" + aniosAntesDePreescribir + '}';
     }
-    
-    
-    
-    
+
 }

@@ -440,6 +440,7 @@ EXEC CRUDCondena 1,'33898087-1',5,1
 GO
 
 
+
 /*FUNCIONES*/
 
 /*
@@ -560,19 +561,12 @@ SELECT juez.run, juez.nombre, juez.apellido, juez.edad,
  FROM orientacionSexual, juez WHERE orientacionSexual.id=juez.fk_genero
  GO
 
-
-
-
--- cantidad de perpetradores menores de edad heterosexuales
-SELECT COUNT(*) FROM perpetrador, orientacionSexual WHERE perpetrador.edad<18 AND orientacionSexual.nombre='Heterosexual'
+ -- Consulta que muestra los datos necesarios para la tabla delito
+SELECT delito.id, tipoDelito.nombre, delito.fk_perpetrador, delito.fk_victima, delito.detalle ,delito.fecha_delito, delito.fecha_denuncia, 
+delito.aniosAntesDePreescribir FROM delito, tipoDelito WHERE delito.tipo_delito_fk=tipoDelito.id
 GO
 
-
--- cantidad de condenas a un perpetrador, en donde la victima es un menor de edad
-SELECT COUNT (*) FROM condena, delito, victima WHERE condena.fk_delito=delito.id AND delito.fk_victima=victima.run AND victima.edad<18
-GO
-
-
+-- Consulta que muestra los datos necesarios para la tabla condena
 
 
 

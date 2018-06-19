@@ -231,4 +231,129 @@ public class Data {
 
     }
 
+    public void crearJuez(String run, String nombre, String apellido, int edad, String genero, String sexo) throws SQLException {
+        query = "EXEC CRUDjuez '" + run + "','" + nombre + "','" + apellido + "'," + edad + "," + genero + ",'" + sexo + "',0,1";
+        con.ejecutar(query);
+
+    }
+
+    public Juez mostrarJuez(String run) throws SQLException {
+        query = "EXEC CRUDjuez " + run + ", 'irrelevante','irrelevante',0,'irrelevante','irrelevate',0,2 ";
+
+        rs = con.ejecutarSelect(query);
+
+        Juez j = new Juez();
+        while (rs.next()) {
+            j.setRun(rs.getString(1));
+            j.setNombre(rs.getString(2));
+            j.setApellido(rs.getString(3));
+            j.setEdad(rs.getInt(4));
+            j.setGenero(rs.getString(5));
+            j.setSexo(rs.getString(6));
+            j.setNDeSentenciasDictadas(rs.getInt(7));
+        }
+        return j;
+
+    }
+
+    public void actualizarJuez(String run, String nombre, String apellido, int edad, String genero, String sexo) throws SQLException {
+        query = "EXEC CRUDDelito '" + run + "','" + nombre + "','" + apellido + "'," + edad + "," + genero + ",'" + sexo + "',0,3";
+        con.ejecutar(query);
+    }
+
+    public void borrarJuez(String run, String nombre, String apellido, int edad, String genero, String sexo) throws SQLException {
+        query = "EXEC CRUDDelito '" + run + "','" + nombre + "','" + apellido + "'," + edad + "," + genero + ",'" + sexo + "',0,4";;
+        con.ejecutar(query);
+    }
+
+    public List<Juez> leerTodosLosJueces() throws SQLException {
+        query = "SELECT juez.run, juez.nombre, juez.apellido, juez.edad,\n"
+                + " orientacionSexual.nombre, juez.sexo, juez.cantidadDeSentenciasDictadas\n"
+                + " FROM orientacionSexual, juez WHERE orientacionSexual.id=juez.fk_genero";
+
+        rs = con.ejecutarSelect(query);
+
+        ArrayList<Juez> jueces = new ArrayList();
+
+        while (rs.next()) {
+            Juez j = new Juez();
+            j.setRun(rs.getString(1));
+            j.setNombre(rs.getString(2));
+            j.setApellido(rs.getString(3));
+            j.setEdad(rs.getInt(4));
+            j.setGenero(rs.getString(5));
+            j.setSexo(rs.getString(6));
+            j.setNDeSentenciasDictadas(rs.getInt(7));
+
+            jueces.add(j);
+        }
+
+        return jueces;
+
+    }
+
+    public void crearDelito(int id, int tipoDeDelito, String runPerpetrador, String runVictima, String detalle, String fDelito, String fDenuncia) throws SQLException {
+        query = "EXEC CRUDDelito '" + id + "','" + tipoDeDelito + "','" + runPerpetrador + "','" + runVictima + "'," + fDelito + "," + fDenuncia + ",1";
+        con.ejecutar(query);
+
+    }
+
+    public Delito mostrarDelito(int id) throws SQLException {
+        query = "EXEC CRUDDelito " + id + ", 0,'irrelevante','irrelevante','irrelevante','irrelevate',2 ";
+
+        rs = con.ejecutarSelect(query);
+
+        Delito d = new Delito();
+        while (rs.next()) {
+            d.setId(rs.getInt(1));
+            d.setFk_delito(rs.getInt(2));
+            d.setFk_perpetrador(rs.getString(3));
+            d.setFk_victima(rs.getString(4));
+            d.setDetalle(rs.getString(5));
+            d.setFecha_delito(rs.getString(6));
+            d.setFecha_denuncia(rs.getString(7));
+            d.setAniosAntesDePreescribir(rs.getInt(7));
+        }
+        return d;
+
+    }
+
+    public void actualizarDelito(int id, int tipoDeDelito, String runPerpetrador, String runVictima, String detalle, String fDelito, String fDenuncia) throws SQLException {
+        query = "EXEC CRUDDelito '" + id + "','" + tipoDeDelito + "','" + runPerpetrador + "','" + runVictima + "'," + fDelito + "," + fDenuncia + ",3";
+        con.ejecutar(query);
+
+    }
+
+    public void borrarDelito(int id) throws SQLException {
+        query = "EXEC CRUDDelito " + id + ", 0,'irrelevante','irrelevante','irrelevante','irrelevate',2 ";
+
+        con.ejecutar(query);
+    }
+
+    public List<Delito> leerTodosLosDelitos() throws SQLException {
+        query = "SELECT delito.id, tipoDelito.nombre, delito.fk_perpetrador, delito.fk_victima, delito.detalle ,delito.fecha_delito, delito.fecha_denuncia, \n"
+                + "delito.aniosAntesDePreescribir FROM delito, tipoDelito WHERE delito.tipo_delito_fk=tipoDelito.id";
+
+        rs = con.ejecutarSelect(query);
+
+        ArrayList<Delito> delitos = new ArrayList();
+
+        while (rs.next()) {
+            Delito d = new Delito();
+            d.setId(rs.getInt(1));
+            d.setFk_delito(rs.getInt(2));
+            d.setFk_perpetrador(rs.getString(3));
+            d.setFk_victima(rs.getString(4));
+            d.setDetalle(rs.getString(5));
+            d.setFecha_delito(rs.getString(6));
+            d.setFecha_denuncia(rs.getString(7));
+            d.setAniosAntesDePreescribir(rs.getInt(7));
+
+            delitos.add(d);
+        }
+
+        return delitos;
+
+    }
+
 }

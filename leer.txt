@@ -1,0 +1,14 @@
+
+
+Descargar dl_auth desde https://docs.microsoft.com/en-us/sql/connect/jdbc/building-the-connection-url#Connectingintegrated
+
+Bajar archivo que corresponda con el OS (x64 o x86)
+Copiar archivo sqljdbc_auth.dll 
+Pegar en: C:\Program Files\Java\jdk_version\bin
+Reiniciar editor de codigo
+
+Habilitar protocolo TCP/IP en el administrador de configuracion del serivdor.
+
+Tambien verificar que puerto 1433 este habilitado en el server config de msql
+
+El programa usa autenticacion por windows. En la clase Data, cambiar el valor del parametro de server (el primero) por el nombre del servidor usado para ejecutar el script de bd en el PC en que se esta corriendo el programa.

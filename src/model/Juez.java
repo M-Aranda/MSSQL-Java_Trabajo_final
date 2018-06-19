@@ -29,6 +29,10 @@ public class Juez {
         this.NDeSentenciasDictadas = NDeSentenciasDictadas;
     }
 
+    Juez() {
+
+    }
+
     public String getRun() {
         return run;
     }
@@ -90,7 +94,4 @@ public class Juez {
         return "Juez{" + "run=" + run + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", fk_genero=" + genero + ", sexo=" + sexo + ", NDeSentenciasDictadas=" + NDeSentenciasDictadas + '}';
     }
 
-   
-    
-    
 }
