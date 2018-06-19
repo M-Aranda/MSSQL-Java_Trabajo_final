@@ -65,7 +65,7 @@ CREATE TABLE delito(
 	fk_perpetrador VARCHAR(20)  FOREIGN KEY REFERENCES perpetrador(run),
 	fk_victima VARCHAR(20)  FOREIGN KEY REFERENCES victima(run),
 	detalle VARCHAR (200),
-	fecha_delito DATETIME,
+	fecha_delito VARCHAR(20),
 	fecha_denuncia DATETIME DEFAULT GETDATE(),
 	aniosAntesDePreescribir INT
 ) 
@@ -80,6 +80,7 @@ fk_juez VARCHAR (20) FOREIGN KEY REFERENCES juez(run),
 fk_delito INT FOREIGN KEY REFERENCES delito (id)
 )
 GO
+
 
 /*PROCEDIMIENTOS CRUD Y DE INFORME*/
 
@@ -265,7 +266,7 @@ CREATE PROCEDURE CRUDtipoDelito(@id INT, @nombre VARCHAR(50), @tipoDeQuery INT) 
 
 
 /*CRUD delito, toma parametros y ejecuta consultas. 1,2,3,4 para INSERT, SELECT, UPDATE y DELETE respectivamente*/
-CREATE PROCEDURE CRUDDelito(@id INT, @tipo_de_delito INT,@fk_perpetrador VARCHAR (20), @fk_victima VARCHAR (20),@detalle VARCHAR (200),@fecha_delito DATETIME, @tipoDeQuery INT) AS --DROP PROCEDURE CRUDDelito
+CREATE PROCEDURE CRUDDelito(@id INT, @tipo_de_delito INT,@fk_perpetrador VARCHAR (20), @fk_victima VARCHAR (20),@detalle VARCHAR (200),@fecha_delito VARCHAR (20), @tipoDeQuery INT) AS --DROP PROCEDURE CRUDDelito
 
 
 	BEGIN
@@ -273,7 +274,7 @@ CREATE PROCEDURE CRUDDelito(@id INT, @tipo_de_delito INT,@fk_perpetrador VARCHAR
 	DECLARE @fk_perpAIngresar VARCHAR (20)
 	DECLARE @fk_victAIngresar VARCHAR (20)
 	DECLARE @detalleAIngresar VARCHAR (200)
-	DECLARE @fechaDeDelitoAIngresar DATETIME
+	DECLARE @fechaDeDelitoAIngresar VARCHAR (20)
 
 	SET @tipoDeDelitoAIngresar=@tipo_de_delito
 	SET @fk_perpAIngresar=@fk_perpetrador
@@ -376,6 +377,96 @@ UPDATE juez SET cantidadDeSentenciasDictadas=(@cantidadActualDeCondenas+1) WHERE
 GO
 
 
+/*FUNCIONES*/
+
+/*
+Funcion que muestra la suma de los anios antes de que preeescriban los delitos de un perpetrador
+(para propositos de conveniencia de SW, se simula que 2 o mas delitos no
+tienen tiempo de preescripcion independiente)
+*/
+CREATE FUNCTION [dbo].[calcularCantidadDeAniosAntesDeQueTodosLosDelitosPreescriban] (@runDePerpetrador VARCHAR(20)) RETURNS INT AS --DROP FUNCTION calcularCantidadDeAniosAntesDeQueTodosLosDelitosPreescriban
+ BEGIN
+
+ DECLARE @aniosAcumulados INT
+ DECLARE @aniosEnEstaIteracion INT
+ DECLARE cursorAnios CURSOR
+
+
+
+ FOR (SELECT delito.aniosAntesDePreescribir FROM delito,perpetrador WHERE perpetrador.run=delito.fk_perpetrador AND perpetrador.run=@runDePerpetrador)
+	OPEN cursorAnios
+
+	FETCH NEXT FROM cursorAnios
+		INTO @aniosEnEstaIteracion
+		SET @aniosAcumulados=0+@aniosEnEstaIteracion
+
+
+	WHILE @@FETCH_STATUS=0
+	BEGIN
+		FETCH NEXT FROM cursorAnios
+			INTO @aniosEnEstaIteracion 
+			SET @aniosAcumulados=@aniosAcumulados+@aniosEnEstaIteracion
+	END
+
+	SET @aniosAcumulados=@aniosAcumulados-@aniosEnEstaIteracion -- Si no agrego esta linea itera una vez mas el ultimo item
+
+	CLOSE cursorAnios
+	DEALLOCATE cursorAnios
+
+
+
+
+	 RETURN @aniosAcumulados
+END
+
+GO
+
+
+/* Procedimeinto que determina una cantidad de n de perpetradores
+ mas peligrosos basandose en la cantidad de anios antes de que preescriban
+ sus delitos acumulados. Muestra resultados */
+CREATE PROCEDURE [dbo].[determinarTOPNperpetradoresMasPeligrosos] @cantidadTOPNperpetradores INT AS --DROP PROCEDURE  determinarTOPNperpetradoresMasPeligrosos
+BEGIN
+	
+	CREATE TABLE #tablaTemporal (id UNIQUEIDENTIFIER,run VARCHAR (20),cantDelitos INT, aniosAcumulados INT, PRIMARY KEY(id))
+	DECLARE @run_perpetrador VARCHAR (20)
+	DECLARE @cantDelitos INT
+	DECLARE @aniosAcumulados INT
+
+	DECLARE @nPerp INT
+	SET @nPerp=@cantidadTOPNperpetradores
+
+	DECLARE cursor_informe CURSOR
+		FOR (SELECT run, cantidadDeDelitosCometidos FROM perpetrador)
+
+
+
+	OPEN cursor_informe
+
+	FETCH NEXT FROM cursor_informe
+		INTO @run_perpetrador, @cantDelitos 
+		SET @aniosAcumulados=(SELECT [dbo].[calcularCantidadDeAniosAntesDeQueTodosLosDelitosPreescriban](@run_perpetrador))
+		INSERT INTO #tablaTemporal VALUES (NEWID(),@run_perpetrador,@cantDelitos, @aniosAcumulados)
+
+
+	WHILE @@FETCH_STATUS=0
+	BEGIN
+
+		FETCH NEXT FROM cursor_informe
+			INTO @run_perpetrador, @cantDelitos 
+			SET @aniosAcumulados=(SELECT [dbo].[calcularCantidadDeAniosAntesDeQueTodosLosDelitosPreescriban](@run_perpetrador))
+			INSERT INTO #tablaTemporal VALUES (NEWID(),@run_perpetrador,@cantDelitos, @aniosAcumulados)
+
+	END
+
+	CLOSE cursor_informe
+	DEALLOCATE cursor_informe
+
+	SELECT TOP (@nPerp) run AS 'RUT', cantDelitos AS 'Cantidad de delitos',aniosAcumulados AS 'Anios acumulados' FROM  #tablaTemporal  ORDER BY aniosAcumulados DESC 
+
+	END
+	GO
+
 EXEC CRUDtipoDelito 1,'Violación',1
 EXEC CRUDtipoDelito 1,'Estupro',1
 EXEC CRUDtipoDelito 1,'Abuso Sexual',1
@@ -441,102 +532,6 @@ GO
 
 
 
-/*FUNCIONES*/
-
-/*
-Funcion que muestra la suma de los anios antes de que preeescriban los delitos de un perpetrador
-(para propositos de conveniencia de SW, se simula que 2 o mas delitos no
-tienen tiempo de preescripcion independiente)
-*/
-CREATE FUNCTION [dbo].[calcularCantidadDeAniosAntesDeQueTodosLosDelitosPreescriban] (@runDePerpetrador VARCHAR(20)) RETURNS INT AS --DROP FUNCTION calcularCantidadDeAniosAntesDeQueTodosLosDelitosPreescriban
- BEGIN
-
- DECLARE @aniosAcumulados INT
- DECLARE @aniosEnEstaIteracion INT
- DECLARE cursorAnios CURSOR
-
-
-
- FOR (SELECT delito.aniosAntesDePreescribir FROM delito,perpetrador WHERE perpetrador.run=delito.fk_perpetrador AND perpetrador.run=@runDePerpetrador)
-	OPEN cursorAnios
-
-	FETCH NEXT FROM cursorAnios
-		INTO @aniosEnEstaIteracion
-		SET @aniosAcumulados=0+@aniosEnEstaIteracion
-
-
-	WHILE @@FETCH_STATUS=0
-	BEGIN
-		FETCH NEXT FROM cursorAnios
-			INTO @aniosEnEstaIteracion 
-			SET @aniosAcumulados=@aniosAcumulados+@aniosEnEstaIteracion
-	END
-
-	SET @aniosAcumulados=@aniosAcumulados-@aniosEnEstaIteracion -- Si no agrego esta linea itera una vez mas el ultimo item
-
-	CLOSE cursorAnios
-	DEALLOCATE cursorAnios
-
-
-
-
-	 RETURN @aniosAcumulados
-END
-
-GO
-
-
-/* Procedimeinto que determina una cantidad de n de perpetradores
- mas peligrosos basandose en la cantidad de anios antes de que preescriban
- sus delitos acumulados */
-CREATE PROCEDURE [dbo].[determinarTOPNperpetradoresMasPeligrosos] @cantidadTOPNperpetradores INT AS --DROP PROCEDURE  determinarTOPNperpetradoresMasPeligrosos
-BEGIN
-	
-	CREATE TABLE #tablaTemporal (id UNIQUEIDENTIFIER,run VARCHAR (20),cantDelitos INT, aniosAcumulados INT, PRIMARY KEY(id))
-	DECLARE @run_perpetrador VARCHAR (20)
-	DECLARE @cantDelitos INT
-	DECLARE @aniosAcumulados INT
-
-	DECLARE @nPerp INT
-	SET @nPerp=@cantidadTOPNperpetradores
-
-	DECLARE cursor_informe CURSOR
-		FOR (SELECT run, cantidadDeDelitosCometidos FROM perpetrador)
-
-
-
-	OPEN cursor_informe
-
-	FETCH NEXT FROM cursor_informe
-		INTO @run_perpetrador, @cantDelitos 
-		SET @aniosAcumulados=(SELECT [dbo].[calcularCantidadDeAniosAntesDeQueTodosLosDelitosPreescriban](@run_perpetrador))
-		INSERT INTO #tablaTemporal VALUES (NEWID(),@run_perpetrador,@cantDelitos, @aniosAcumulados)
-
-
-	WHILE @@FETCH_STATUS=0
-	BEGIN
-
-		FETCH NEXT FROM cursor_informe
-			INTO @run_perpetrador, @cantDelitos 
-			SET @aniosAcumulados=(SELECT [dbo].[calcularCantidadDeAniosAntesDeQueTodosLosDelitosPreescriban](@run_perpetrador))
-			INSERT INTO #tablaTemporal VALUES (NEWID(),@run_perpetrador,@cantDelitos, @aniosAcumulados)
-
-	END
-
-	CLOSE cursor_informe
-	DEALLOCATE cursor_informe
-
-	SELECT TOP (@nPerp) run AS 'RUT', cantDelitos AS 'Cantidad de delitos',aniosAcumulados AS 'Anios acumulados' FROM  #tablaTemporal  ORDER BY aniosAcumulados DESC 
-
-	END
-	GO
-
-
-EXEC determinarTOPNperpetradoresMasPeligrosos 5-- Limitar seleccion del top en Java
-
-
-
-/*Hasta aqui debiese estar todo bien */
 
 
 
@@ -568,9 +563,13 @@ GO
 
 -- Consulta que muestra los datos necesarios para la tabla condena
 
+SELECT condena.id, condena.fk_juez, juez.apellido, condena.fk_delito, tipoDelito.nombre 
+FROM condena, delito, tipoDelito, juez WHERE condena.fk_juez=juez.run
+AND condena.fk_delito=delito.id AND delito.tipo_delito_fk=tipoDelito.id
 
 
 
+EXEC determinarTOPNperpetradoresMasPeligrosos 5-- Limitar seleccion del top en Java
 
 
 USE MASTER

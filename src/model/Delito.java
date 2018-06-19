@@ -12,6 +12,7 @@ package model;
 public class Delito {
 
     private int id;
+    private String nombreTipoDelito;
     private int fk_delito;
     private String fk_perpetrador;
     private String fk_victima;
@@ -19,6 +20,7 @@ public class Delito {
     private String fecha_delito;
     private String fecha_denuncia;
     private int aniosAntesDePreescribir;
+    
 
     public Delito(int id, int fk_delito, String fk_perpetrador, String fk_victima, String detalle, String fecha_delito, String fecha_denuncia, int aniosAntesDePreescribir) {
         this.id = id;
@@ -31,10 +33,33 @@ public class Delito {
         this.aniosAntesDePreescribir = aniosAntesDePreescribir;
     }
 
+    public Delito(int id, String nombreTipoDelito, String fk_perpetrador, String fk_victima, String detalle, String fecha_delito, String fecha_denuncia, int aniosAntesDePreescribir) {
+        this.id = id;
+        this.nombreTipoDelito = nombreTipoDelito;
+        this.fk_perpetrador = fk_perpetrador;
+        this.fk_victima = fk_victima;
+        this.detalle = detalle;
+        this.fecha_delito = fecha_delito;
+        this.fecha_denuncia = fecha_denuncia;
+        this.aniosAntesDePreescribir = aniosAntesDePreescribir;
+    }
+    
+    
+
     Delito() {
 
     }
 
+    public String getNombreTipoDelito() {
+        return nombreTipoDelito;
+    }
+
+    public void setNombreTipoDelito(String nombreTipoDelito) {
+        this.nombreTipoDelito = nombreTipoDelito;
+    }
+
+    
+    
     public int getId() {
         return id;
     }

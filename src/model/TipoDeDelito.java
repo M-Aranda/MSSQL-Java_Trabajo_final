@@ -41,7 +41,7 @@ public class TipoDeDelito {
 
     @Override
     public String toString() {
-        return "TipoDeDelito{" + "id=" + id + ", nombre=" + nombre + '}';
+        return "" + id + ". " + nombre + "";
     }
 
 }

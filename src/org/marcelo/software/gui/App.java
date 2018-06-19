@@ -8,11 +8,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import model.Condena;
+import model.CriminalMuyPeligroso;
 import model.Data;
 import model.Delito;
 import model.Genero;
 import model.Juez;
 import model.Perpetrador;
+import model.TMModelCondena;
+import model.TMModelCriminalMuyPeligroso;
 import model.TMModelDelito;
 import model.TMModelJuez;
 import model.TMModelOrientacionSexual;
@@ -31,6 +35,8 @@ public class App extends javax.swing.JFrame {
     private TMModelPerpetrador modelPerpetrador;
     private TMModelJuez modelJuez;
     private TMModelDelito modelDelito;
+    private TMModelCondena modeloCondena;
+    private TMModelCriminalMuyPeligroso modelocmp;
 
     private List<Genero> orientacionSexuales;
     private List<TipoDeDelito> tiposDeDelito;
@@ -38,6 +44,8 @@ public class App extends javax.swing.JFrame {
     private List<Perpetrador> listadoDePerpetradores;
     private List<Juez> listadoDeJueces;
     private List<Delito> listadoDeDelitos;
+    private List<Condena> listadoDeCondenas;
+    private List<CriminalMuyPeligroso> listadoCmp;
 
     public App() throws SQLException {
         initComponents();
@@ -54,12 +62,21 @@ public class App extends javax.swing.JFrame {
         rbtSexoMasculinoJuez.setSelected(true);
         rbtSexoMasculinoVictima.setSelected(true);
 
+      cargarTODASlasTablas();
+
+        inicializarCboDelito();
+
+    }
+
+    private void cargarTODASlasTablas() throws SQLException {
         cargarTablaOrientacionesSexuales();
         cargarTablaTiposDeDelito();
         cargarTablaVictimas();
         cargarTablaPerpetradores();
         cargarTablaJueces();
         cargarTablaDelitos();
+        cargarTablaCondenas();
+        cargarTablaInforme();
 
     }
 
@@ -75,6 +92,19 @@ public class App extends javax.swing.JFrame {
         String msg = "Verificar datos";
         int tipo_msg = JOptionPane.ERROR_MESSAGE;
         JOptionPane.showMessageDialog(null, msg, titulo, tipo_msg);
+    }
+
+    private void inicializarCboDelito() throws SQLException {
+        cboTipoDelito.removeAllItems();
+
+        tiposDeDelito = d.leerTodosLosTiposDeDelitos();
+
+        for (TipoDeDelito td : tiposDeDelito) {
+
+            cboTipoDelito.addItem(td.toString());
+
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -151,7 +181,29 @@ public class App extends javax.swing.JFrame {
         pnlDelito = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tblDelito = new javax.swing.JTable();
+        lblTipoDeDelitoDelito = new javax.swing.JLabel();
+        lblRunPerpDelito = new javax.swing.JLabel();
+        lblRunVictDelito = new javax.swing.JLabel();
+        lblDetalleDelito = new javax.swing.JLabel();
+        lblFechaDelito = new javax.swing.JLabel();
+        txtRunPerpDelito = new javax.swing.JTextField();
+        txtRunVictimaDelito = new javax.swing.JTextField();
+        txtDetalleDelito = new javax.swing.JTextField();
+        txtFechaDelito = new javax.swing.JTextField();
+        cboTipoDelito = new javax.swing.JComboBox<>();
+        btnRegistrarDelito = new javax.swing.JButton();
         pnlCondena = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        tblCondena = new javax.swing.JTable();
+        lblRunJuezCondena = new javax.swing.JLabel();
+        lblIdDelitoCondena = new javax.swing.JLabel();
+        txtRunJuezCondena = new javax.swing.JTextField();
+        txtIdDelitoJuez = new javax.swing.JTextField();
+        btnRegistrarCondena = new javax.swing.JButton();
+        pnlInforme = new javax.swing.JPanel();
+        lblTop3Criminales = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        tblTop3Criminales = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -244,7 +296,7 @@ public class App extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(pnlPerpetradorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlPerpetradorLayout.setVerticalGroup(
@@ -369,7 +421,7 @@ public class App extends javax.swing.JFrame {
                                 .addComponent(rbtSexoMasculinoVictima)
                                 .addGap(10, 10, 10)
                                 .addComponent(rbtSexoFemeninoVictima)))))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         pnlVictimaLayout.setVerticalGroup(
             pnlVictimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -457,23 +509,21 @@ public class App extends javax.swing.JFrame {
             .addGroup(pnlJuezLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlJuezLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlJuezLayout.createSequentialGroup()
-                        .addGroup(pnlJuezLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblGeneroJuez)
-                            .addComponent(lblSexoJuez))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlJuezLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnlJuezLayout.createSequentialGroup()
-                                .addComponent(rbtSexoMasculinoJuez)
-                                .addGap(18, 18, 18)
-                                .addComponent(rbtSexoFemeninoJuez))
-                            .addGroup(pnlJuezLayout.createSequentialGroup()
-                                .addComponent(txtGeneroJuez)
-                                .addGap(59, 59, 59)))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane5)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlJuezLayout.createSequentialGroup()
                         .addGroup(pnlJuezLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlJuezLayout.createSequentialGroup()
+                                .addGroup(pnlJuezLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblGeneroJuez)
+                                    .addComponent(lblSexoJuez))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pnlJuezLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlJuezLayout.createSequentialGroup()
+                                        .addComponent(rbtSexoMasculinoJuez)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(rbtSexoFemeninoJuez)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(txtGeneroJuez)))
                             .addGroup(pnlJuezLayout.createSequentialGroup()
                                 .addGroup(pnlJuezLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblApellidoJuez)
@@ -482,14 +532,14 @@ public class App extends javax.swing.JFrame {
                                 .addGroup(pnlJuezLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtApellidoJuez)
                                     .addComponent(spnEdadJuez)))
-                            .addGroup(pnlJuezLayout.createSequentialGroup()
-                                .addComponent(lblNombreJuez)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNombreJuez))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlJuezLayout.createSequentialGroup()
-                                .addComponent(lblRunJuez)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                                .addComponent(txtRunJuez, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(pnlJuezLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNombreJuez)
+                                    .addComponent(lblRunJuez))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pnlJuezLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtRunJuez)
+                                    .addComponent(txtNombreJuez))))
                         .addGap(35, 35, 35)
                         .addComponent(btnRegistrarJuez)
                         .addGap(380, 380, 380)))
@@ -564,7 +614,7 @@ public class App extends javax.swing.JFrame {
                 .addComponent(txtNombreOrientacionSexual, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnIngresarOrientacionSexual)
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addContainerGap(296, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrientacionSexualLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -622,7 +672,7 @@ public class App extends javax.swing.JFrame {
                         .addComponent(btnRegistrarNombreTipoDeDelito)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlTipoDeDelitoLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
                         .addGap(21, 21, 21))))
         );
         pnlTipoDeDelitoLayout.setVerticalGroup(
@@ -653,37 +703,202 @@ public class App extends javax.swing.JFrame {
         ));
         jScrollPane6.setViewportView(tblDelito);
 
+        lblTipoDeDelitoDelito.setText("Tipo de delito:");
+
+        lblRunPerpDelito.setText("Run Perpetrador:");
+
+        lblRunVictDelito.setText("Run Victima:");
+
+        lblDetalleDelito.setText("Detalle:");
+
+        lblFechaDelito.setText("Fecha de delito:");
+
+        txtRunVictimaDelito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRunVictimaDelitoActionPerformed(evt);
+            }
+        });
+
+        cboTipoDelito.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnRegistrarDelito.setText("Registrar");
+        btnRegistrarDelito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarDelitoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlDelitoLayout = new javax.swing.GroupLayout(pnlDelito);
         pnlDelito.setLayout(pnlDelitoLayout);
         pnlDelitoLayout.setHorizontalGroup(
             pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDelitoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addGroup(pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+                    .addGroup(pnlDelitoLayout.createSequentialGroup()
+                        .addGroup(pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDelitoLayout.createSequentialGroup()
+                                .addGroup(pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(pnlDelitoLayout.createSequentialGroup()
+                                        .addComponent(lblFechaDelito)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtFechaDelito))
+                                    .addGroup(pnlDelitoLayout.createSequentialGroup()
+                                        .addGroup(pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblRunPerpDelito)
+                                            .addComponent(lblTipoDeDelitoDelito))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(cboTipoDelito, 0, 215, Short.MAX_VALUE)
+                                            .addComponent(txtRunPerpDelito)))
+                                    .addGroup(pnlDelitoLayout.createSequentialGroup()
+                                        .addComponent(lblDetalleDelito)
+                                        .addGap(57, 57, 57)
+                                        .addComponent(txtDetalleDelito, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(172, 172, 172)
+                                .addComponent(btnRegistrarDelito))
+                            .addGroup(pnlDelitoLayout.createSequentialGroup()
+                                .addComponent(lblRunVictDelito)
+                                .addGap(35, 35, 35)
+                                .addComponent(txtRunVictimaDelito, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         pnlDelitoLayout.setVerticalGroup(
             pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDelitoLayout.createSequentialGroup()
-                .addGap(223, 223, 223)
+                .addGroup(pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTipoDeDelitoDelito)
+                    .addComponent(cboTipoDelito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRunPerpDelito)
+                    .addComponent(txtRunPerpDelito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegistrarDelito))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRunVictDelito)
+                    .addComponent(txtRunVictimaDelito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDetalleDelito)
+                    .addComponent(txtDetalleDelito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlDelitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFechaDelito)
+                    .addComponent(txtFechaDelito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(106, 106, 106)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         tbpOpciones.addTab("Delito", pnlDelito);
+
+        tblCondena.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane7.setViewportView(tblCondena);
+
+        lblRunJuezCondena.setText("Run juez:");
+
+        lblIdDelitoCondena.setText("Id de delito");
+
+        btnRegistrarCondena.setText("Registrar");
+        btnRegistrarCondena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarCondenaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlCondenaLayout = new javax.swing.GroupLayout(pnlCondena);
         pnlCondena.setLayout(pnlCondenaLayout);
         pnlCondenaLayout.setHorizontalGroup(
             pnlCondenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 690, Short.MAX_VALUE)
+            .addGroup(pnlCondenaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(pnlCondenaLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(pnlCondenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblIdDelitoCondena)
+                    .addComponent(lblRunJuezCondena))
+                .addGap(18, 18, 18)
+                .addGroup(pnlCondenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtRunJuezCondena, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                    .addComponent(txtIdDelitoJuez))
+                .addGap(28, 28, 28)
+                .addComponent(btnRegistrarCondena)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlCondenaLayout.setVerticalGroup(
             pnlCondenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 577, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCondenaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlCondenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRunJuezCondena)
+                    .addComponent(txtRunJuezCondena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegistrarCondena))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlCondenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblIdDelitoCondena)
+                    .addComponent(txtIdDelitoJuez, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(85, 85, 85))
         );
 
         tbpOpciones.addTab("Condena", pnlCondena);
+
+        lblTop3Criminales.setText("Top 3 criminales");
+
+        tblTop3Criminales.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane8.setViewportView(tblTop3Criminales);
+
+        javax.swing.GroupLayout pnlInformeLayout = new javax.swing.GroupLayout(pnlInforme);
+        pnlInforme.setLayout(pnlInformeLayout);
+        pnlInformeLayout.setHorizontalGroup(
+            pnlInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInformeLayout.createSequentialGroup()
+                .addGroup(pnlInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlInformeLayout.createSequentialGroup()
+                        .addGap(243, 243, 243)
+                        .addComponent(lblTop3Criminales))
+                    .addGroup(pnlInformeLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(179, Short.MAX_VALUE))
+        );
+        pnlInformeLayout.setVerticalGroup(
+            pnlInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInformeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblTop3Criminales)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(386, Short.MAX_VALUE))
+        );
+
+        tbpOpciones.addTab("Informe", pnlInforme);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -710,11 +925,11 @@ public class App extends javax.swing.JFrame {
         String nombre = txtNombreOrientacionSexual.getText();
         try {
             d.crearOrientacionSexual(nombre);
+            msgDeOperacionExitosa();
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            msgDatosIncorrectos();
         }
-
-        msgDeOperacionExitosa();
 
         try {
             cargarTablaOrientacionesSexuales();
@@ -724,17 +939,22 @@ public class App extends javax.swing.JFrame {
 
         txtNombreOrientacionSexual.setText("");
         txtNombreOrientacionSexual.requestFocus();
+        try {
+            cargarTablaInforme();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnIngresarOrientacionSexualActionPerformed
 
     private void btnRegistrarNombreTipoDeDelitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarNombreTipoDeDelitoActionPerformed
         String nombre = txtNombreTipoDeDelito.getText();
         try {
             d.crearTipoDeDelito(nombre);
+            msgDeOperacionExitosa();
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            msgDatosIncorrectos();
         }
-
-        msgDeOperacionExitosa();
 
         try {
             cargarTablaTiposDeDelito();
@@ -742,8 +962,18 @@ public class App extends javax.swing.JFrame {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        try {
+            inicializarCboDelito();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
         txtNombreTipoDeDelito.setText("");
         txtNombreTipoDeDelito.requestFocus();
+          try {
+            cargarTablaInforme();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_btnRegistrarNombreTipoDeDelitoActionPerformed
 
@@ -762,6 +992,7 @@ public class App extends javax.swing.JFrame {
 
         try {
             d.crearVictima(run, nombre, apellido, edad, genero, sexo);
+            msgDeOperacionExitosa();
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             msgDatosIncorrectos();
@@ -774,12 +1005,16 @@ public class App extends javax.swing.JFrame {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        msgDeOperacionExitosa();
         txtRunVictima.setText("");
         txtNombreVictima.setText("");
         txtApellidoVictima.setText("");
         txtGeneroVictima.setText("");
         rbtSexoMasculinoPerpetrador.setSelected(true);
+          try {
+            cargarTablaInforme();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 
     }//GEN-LAST:event_btnRegistrarVictimaActionPerformed
@@ -799,6 +1034,7 @@ public class App extends javax.swing.JFrame {
 
         try {
             d.crearPerpetrador(run, nombre, apellido, edad, genero, sexo);
+            msgDeOperacionExitosa();
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             msgDatosIncorrectos();
@@ -811,12 +1047,16 @@ public class App extends javax.swing.JFrame {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        msgDeOperacionExitosa();
         txtRunPerpetrador.setText("");
         txtNombrePerpetrador.setText("");
         txtApellidoPerpetrador.setText("");
         txtGeneroPerpetrador.setText("");
         rbtSexoMasculinoPerpetrador.setSelected(true);
+          try {
+            cargarTablaInforme();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 
     }//GEN-LAST:event_btnRegistrarPerpetradorActionPerformed
@@ -836,6 +1076,7 @@ public class App extends javax.swing.JFrame {
 
         try {
             d.crearJuez(run, nombre, apellido, edad, genero, sexo);
+            msgDeOperacionExitosa();
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             msgDatosIncorrectos();
@@ -848,15 +1089,92 @@ public class App extends javax.swing.JFrame {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        msgDeOperacionExitosa();
         txtRunJuez.setText("");
         txtNombreJuez.setText("");
         txtApellidoJuez.setText("");
         txtGeneroJuez.setText("");
         rbtSexoMasculinoJuez.setSelected(true);
 
+          try {
+            cargarTablaInforme();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_btnRegistrarJuezActionPerformed
+
+    private void btnRegistrarDelitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarDelitoActionPerformed
+        String seleccion = String.valueOf(cboTipoDelito.getSelectedItem());
+        String runPerp = txtRunPerpDelito.getText();
+        String runVict = txtRunVictimaDelito.getText();
+        String detalle = txtDetalleDelito.getText();
+        String fechaDelito = txtFechaDelito.getText();
+
+        String[] partes = seleccion.split(". ");
+        String parte1 = partes[0];
+        String parte2 = partes[1];
+
+        int idSelecccionadoTipoDelito = Integer.parseInt(parte1);
+
+        try {
+            d.crearDelito(1, idSelecccionadoTipoDelito, runPerp, runVict, detalle, fechaDelito, "irrelevante");//el id generado esta raro
+            msgDeOperacionExitosa();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            msgDatosIncorrectos();
+        }
+
+        try {
+            cargarTablaDelitos();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        txtRunPerpDelito.setText("");
+        txtRunVictimaDelito.setText("");
+        txtDetalleDelito.setText("");
+        txtFechaDelito.setText("");
+          try {
+            cargarTablaInforme();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_btnRegistrarDelitoActionPerformed
+
+    private void txtRunVictimaDelitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRunVictimaDelitoActionPerformed
+        // Aqui nada
+    }//GEN-LAST:event_txtRunVictimaDelitoActionPerformed
+
+    private void btnRegistrarCondenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarCondenaActionPerformed
+        String run = txtRunJuezCondena.getText();
+        int idDelito = Integer.parseInt(txtIdDelitoJuez.getText());
+
+        try {
+            d.crearCondena(1, run, idDelito);
+            msgDeOperacionExitosa();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            msgDatosIncorrectos();
+        }
+
+        try {
+            cargarTablaCondenas();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        txtRunJuezCondena.setText("");
+        txtIdDelitoJuez.setText("");
+          try {
+            cargarTablaInforme();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_btnRegistrarCondenaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -900,14 +1218,28 @@ public class App extends javax.swing.JFrame {
         tblJuez.setModel(modelJuez);
 
     }
-    
-    private void cargarTablaDelitos() throws SQLException{
-        listadoDeDelitos= new ArrayList();
-        listadoDeDelitos=d.leerTodosLosDelitos();
-        modelDelito=new TMModelDelito(listadoDeDelitos);
+
+    private void cargarTablaDelitos() throws SQLException {
+        listadoDeDelitos = new ArrayList();
+        listadoDeDelitos = d.leerTodosLosDelitos();
+        modelDelito = new TMModelDelito(listadoDeDelitos);
         tblDelito.setModel(modelDelito);
-        
-        
+
+    }
+
+    private void cargarTablaCondenas() throws SQLException {
+        listadoDeCondenas = new ArrayList();
+        listadoDeCondenas = d.leerTodasLasCondenas();
+        modeloCondena = new TMModelCondena(listadoDeCondenas);
+        tblCondena.setModel(modeloCondena);
+    }
+
+    public void cargarTablaInforme() throws SQLException {
+        listadoCmp = new ArrayList();
+        listadoCmp = d.crearInformeEnTabla();
+        modelocmp = new TMModelCriminalMuyPeligroso(listadoCmp);
+        tblTop3Criminales.setModel(modelocmp);
+
     }
 
     public static void main(String args[]) {
@@ -940,10 +1272,13 @@ public class App extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btnGrPerpetrador;
     private javax.swing.ButtonGroup btnGrVictima;
     private javax.swing.JToggleButton btnIngresarOrientacionSexual;
+    private javax.swing.JButton btnRegistrarCondena;
+    private javax.swing.JButton btnRegistrarDelito;
     private javax.swing.JToggleButton btnRegistrarJuez;
     private javax.swing.JButton btnRegistrarNombreTipoDeDelito;
     private javax.swing.JButton btnRegistrarPerpetrador;
     private javax.swing.JButton btnRegistrarVictima;
+    private javax.swing.JComboBox<String> cboTipoDelito;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
@@ -952,26 +1287,37 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JLabel lblApellidoJuez;
     private javax.swing.JLabel lblApellidoPerpetrador;
     private javax.swing.JLabel lblApellidoVictima;
+    private javax.swing.JLabel lblDetalleDelito;
     private javax.swing.JLabel lblEdadJuez;
     private javax.swing.JLabel lblEdadPerpetrador;
     private javax.swing.JLabel lblEdadVictima;
+    private javax.swing.JLabel lblFechaDelito;
     private javax.swing.JLabel lblGeneroDeVictima;
     private javax.swing.JLabel lblGeneroJuez;
     private javax.swing.JLabel lblGeneroPerpetrador;
+    private javax.swing.JLabel lblIdDelitoCondena;
     private javax.swing.JLabel lblNombreJuez;
     private javax.swing.JLabel lblNombreOrientacionSexual;
     private javax.swing.JLabel lblNombrePerpetrador;
     private javax.swing.JLabel lblNombreVictima;
     private javax.swing.JLabel lblRunJuez;
+    private javax.swing.JLabel lblRunJuezCondena;
+    private javax.swing.JLabel lblRunPerpDelito;
     private javax.swing.JLabel lblRunPerpetrador;
+    private javax.swing.JLabel lblRunVictDelito;
     private javax.swing.JLabel lblRunVictima;
     private javax.swing.JLabel lblSexoJuez;
     private javax.swing.JLabel lblSexoVictima;
+    private javax.swing.JLabel lblTipoDeDelitoDelito;
+    private javax.swing.JLabel lblTop3Criminales;
     private javax.swing.JPanel pnlCondena;
     private javax.swing.JPanel pnlDelito;
+    private javax.swing.JPanel pnlInforme;
     private javax.swing.JPanel pnlJuez;
     private javax.swing.JPanel pnlOrientacionSexual;
     private javax.swing.JPanel pnlPerpetrador;
@@ -986,26 +1332,34 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JSpinner spnEdadJuez;
     private javax.swing.JSpinner spnEdadPerpetrador;
     private javax.swing.JSpinner spnEdadVictima;
+    private javax.swing.JTable tblCondena;
     private javax.swing.JTable tblDelito;
     private javax.swing.JTable tblJuez;
     private javax.swing.JTable tblOrientacionSexual;
     private javax.swing.JTable tblPerpetrador;
     private javax.swing.JTable tblTipoDeDelito;
+    private javax.swing.JTable tblTop3Criminales;
     private javax.swing.JTable tblVictima;
     private javax.swing.JTabbedPane tbpOpciones;
     private javax.swing.JTextField txtApellidoJuez;
     private javax.swing.JTextField txtApellidoPerpetrador;
     private javax.swing.JTextField txtApellidoVictima;
+    private javax.swing.JTextField txtDetalleDelito;
+    private javax.swing.JTextField txtFechaDelito;
     private javax.swing.JTextField txtGeneroJuez;
     private javax.swing.JTextField txtGeneroPerpetrador;
     private javax.swing.JTextField txtGeneroVictima;
+    private javax.swing.JTextField txtIdDelitoJuez;
     private javax.swing.JTextField txtNombreJuez;
     private javax.swing.JTextField txtNombreOrientacionSexual;
     private javax.swing.JTextField txtNombrePerpetrador;
     private javax.swing.JTextField txtNombreTipoDeDelito;
     private javax.swing.JTextField txtNombreVictima;
     private javax.swing.JTextField txtRunJuez;
+    private javax.swing.JTextField txtRunJuezCondena;
+    private javax.swing.JTextField txtRunPerpDelito;
     private javax.swing.JTextField txtRunPerpetrador;
     private javax.swing.JTextField txtRunVictima;
+    private javax.swing.JTextField txtRunVictimaDelito;
     // End of variables declaration//GEN-END:variables
 }

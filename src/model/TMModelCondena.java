@@ -1,4 +1,8 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package model;
 
 import java.util.List;
@@ -9,46 +13,39 @@ import javax.swing.table.TableModel;
  *
  * @author Marce
  */
-public class TMModelDelito implements TableModel{
+public class TMModelCondena implements TableModel{
     
-    private List<Delito> listadoDeDelitos;
+    private List<Condena> listadoDeCondenas;
 
-    public TMModelDelito(List<Delito> listadoDeDelitos) {
-        this.listadoDeDelitos = listadoDeDelitos;
+    public TMModelCondena(List<Condena> listadoDeCondenas) {
+        this.listadoDeCondenas = listadoDeCondenas;
     }
     
     
-    
-   
+
     @Override
     public int getRowCount() {
-        return listadoDeDelitos.size();
+        return listadoDeCondenas.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 8;
+        return 5;
     }
 
-        @Override
+    @Override
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {
             case 0:
                 return "Id";
             case 1:
-                return "Tipo de delito";
+                return "Run de juez";
             case 2:
-                return "Run verpetrador";
+                return "Apellido de juez";
             case 3:
-                return "Run victima";
+                return "Id de delito";
             case 4:
-                return "Detalle";
-            case 5:
-                return "Fecha de deltio";
-            case 6:
-                return "Fecha de denuncia";
-            case 7:
-                return "Anios antes de preescribir";
+                return "Tipo de delito";
             default:
                 return null;
         }
@@ -65,14 +62,8 @@ public class TMModelDelito implements TableModel{
             case 2:
                 return String.class;
             case 3:
-                return String.class;
+                return Integer.class;
             case 4:
-                return String.class;
-            case 5:
-                return String.class;
-            case 6:
-                return String.class;
-            case 7:
                 return Integer.class;
             default:
                 return null;
@@ -87,31 +78,25 @@ public class TMModelDelito implements TableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Delito d = listadoDeDelitos.get(rowIndex);
+        Condena c = listadoDeCondenas.get(rowIndex);
 
         switch (columnIndex) {
             case 0:
-                return d.getId();
+                return c.getId();
             case 1:
-                return d.getNombreTipoDelito();
+                return c.getFk_Juez();
             case 2:
-                return d.getFk_perpetrador();
+                return c.getApellidoJuez();
             case 3:
-                return d.getFk_victima();
+                return c.getFk_delito();
             case 4:
-                return d.getDetalle();
-            case 5:
-                return d.getFecha_denuncia();
-            case 6:
-                return d.getFecha_denuncia();
-            case 7:
-                return d.getAniosAntesDePreescribir();
+                return c.getNombreDelito();
             default:
                 return null;
         }
 
     }
-    
+
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         System.out.println("");
@@ -126,5 +111,6 @@ public class TMModelDelito implements TableModel{
     public void removeTableModelListener(TableModelListener l) {
         System.out.println("");
     }
+
     
 }
