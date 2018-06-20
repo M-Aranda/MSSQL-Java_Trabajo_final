@@ -534,8 +534,6 @@ GO
 
 
 
-
-
 /* CONSULTAS */
 
 
@@ -569,7 +567,7 @@ AND condena.fk_delito=delito.id AND delito.tipo_delito_fk=tipoDelito.id
 
 
 
-EXEC determinarTOPNperpetradoresMasPeligrosos 5-- Limitar seleccion del top en Java
+EXEC determinarTOPNperpetradoresMasPeligrosos 5-- funciona, pero lo voy a dejar como top 3
 
 
 USE MASTER

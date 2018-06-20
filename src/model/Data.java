@@ -65,13 +65,13 @@ public class Data {
     }
 
     public void crearTipoDeDelito(String nombre) throws SQLException {
-        query = "EXEC CRUDtipoDeDelito 1,'" + nombre + "',1";
+        query = "EXEC CRUDtipoDelito 1,'" + nombre + "',1";
         con.ejecutar(query);
 
     }
 
     public TipoDeDelito mostrarTipoDeDelito(int id) throws SQLException {
-        query = "EXEC CRUDtipoDeDelito " + id + ", 'nombreIrrelevante',2 ";
+        query = "EXEC CRUDtipoDelito " + id + ", 'nombreIrrelevante',2 ";
 
         rs = con.ejecutarSelect(query);
 
@@ -85,12 +85,12 @@ public class Data {
     }
 
     public void actualizarTipoDeDelito(int id, String nuevoNombre) throws SQLException {
-        query = "EXEC CRUDtipoDeDelito " + id + ",'" + nuevoNombre + "',3";
+        query = "EXEC CRUDtipoDelito " + id + ",'" + nuevoNombre + "',3";
         con.ejecutar(query);
     }
 
     public void borrarTipoDeDelito(int id) throws SQLException {
-        query = "EXEC CRUDtipoDeDelito " + id + ",'nombreIreelevante',4";
+        query = "EXEC CRUDtipoDelito " + id + ",'nombreIreelevante',4";
         con.ejecutar(query);
     }
 
@@ -120,7 +120,7 @@ public class Data {
     }
 
     public Victima mostrarVictima(String run) throws SQLException {
-        query = "EXEC CRUDVictima " + run + ", 'irrelevante','irrelevante',0,'irrelevante','irrelevate',2 ";
+        query = "EXEC CRUDVictima '" + run + "', 'irrelevante','irrelevante',0,'irrelevante','irrelevate',2 ";
 
         rs = con.ejecutarSelect(query);
 
@@ -178,7 +178,7 @@ public class Data {
     }
 
     public Perpetrador mostrarPerpetrador(String run) throws SQLException {
-        query = "EXEC CRUDperpetrador " + run + ", 'irrelevante','irrelevante',0,'irrelevante','irrelevate',0,2 ";
+        query = "EXEC CRUDperpetrador '" + run + "', 'irrelevante','irrelevante',0,'irrelevante','irrelevate',0,2 ";
 
         rs = con.ejecutarSelect(query);
 
@@ -238,7 +238,7 @@ public class Data {
     }
 
     public Juez mostrarJuez(String run) throws SQLException {
-        query = "EXEC CRUDjuez " + run + ", 'irrelevante','irrelevante',0,'irrelevante','irrelevate',0,2 ";
+        query = "EXEC CRUDjuez '" + run + "', 'irrelevante','irrelevante',0,'irrelevante','irrelevate',0,2 ";
 
         rs = con.ejecutarSelect(query);
 
@@ -312,7 +312,7 @@ public class Data {
             d.setDetalle(rs.getString(5));
             d.setFecha_delito(rs.getString(6));
             d.setFecha_denuncia(rs.getString(7));
-            d.setAniosAntesDePreescribir(rs.getInt(7));
+            d.setAniosAntesDePreescribir(rs.getInt(8));
         }
         return d;
 
@@ -363,7 +363,7 @@ public class Data {
     }
 
     public Condena mostrarCondena(int id) throws SQLException {
-        query = "EXEC CRUDCondena " + id + ",'irrelevate' , 'irrelevante,'2";
+        query = "EXEC CRUDCondena " + id + ",'irrelevate' , 'irrelevante',2";
 
         rs = con.ejecutarSelect(query);
 

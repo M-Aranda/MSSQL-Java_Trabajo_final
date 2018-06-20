@@ -33,7 +33,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Component id="tbpOpciones" max="32767" attributes="0"/>
+              <Component id="tbpOpciones" pref="728" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -120,8 +120,11 @@
                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="btnActualizarPerpetrador" max="32767" attributes="0"/>
-                                  <Component id="btnRegistrarPerpetrador" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnBorrarPerpetrador" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="btnMostrarPerpetrador" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="btnRegistrarPerpetrador" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -129,7 +132,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane4" pref="701" max="32767" attributes="0"/>
+                      <Component id="jScrollPane4" pref="703" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -141,6 +144,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblRunPerpetrador" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtRunPerpetrador" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnMostrarPerpetrador" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
@@ -307,6 +311,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarPerpetradorActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnMostrarPerpetrador">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostrarPerpetradorActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlVictima">
@@ -358,7 +370,13 @@
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                              <Component id="btnRegistrarVictima" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="btnRegistrarVictima" max="32767" attributes="0"/>
+                                  <Component id="btnActualizarVictima" max="32767" attributes="0"/>
+                                  <Component id="btnBorrarVictima" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btnMostrarVictima" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblSexoVictima" min="-2" max="-2" attributes="0"/>
@@ -373,7 +391,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="94" max="32767" attributes="0"/>
+                      <EmptySpace pref="96" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -385,26 +403,36 @@
                           <Component id="lblRunVictima" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtRunVictima" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnRegistrarVictima" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblNombreVictima" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNombreVictima" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnMostrarVictima" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              <Component id="lblApellidoVictima" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblNombreVictima" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtNombreVictima" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                      <Component id="lblApellidoVictima" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtApellidoVictima" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtApellidoVictima" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                              <Component id="btnActualizarVictima" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblEdadVictima" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="spnEdadVictima" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnBorrarVictima" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -419,7 +447,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane3" min="-2" pref="319" max="-2" attributes="0"/>
-                      <EmptySpace pref="62" max="32767" attributes="0"/>
+                      <EmptySpace pref="139" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -516,6 +544,30 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JButton" name="btnActualizarVictima">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Actualizar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarVictimaActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnBorrarVictima">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Borrar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarVictimaActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnMostrarVictima">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostrarVictimaActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlJuez">
@@ -576,7 +628,14 @@
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                              <Component id="btnRegistrarJuez" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="btnRegistrarJuez" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnActualizarJuez" max="32767" attributes="0"/>
+                                      <Component id="btnBorrarJuez" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="btnMostrarJuez" min="-2" pref="77" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace min="-2" pref="380" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -591,6 +650,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblRunJuez" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtRunJuez" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnMostrarJuez" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -598,17 +658,20 @@
                           <Component id="txtNombreJuez" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnRegistrarJuez" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblApellidoJuez" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtApellidoJuez" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnActualizarJuez" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblEdadJuez" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="spnEdadJuez" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnBorrarJuez" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblGeneroJuez" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtGeneroJuez" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -718,6 +781,30 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarJuezActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnActualizarJuez">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Actualizar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarJuezActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnBorrarJuez">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Borrar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarJuezActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnMostrarJuez">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostrarJuezActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlOrientacionSexual">
@@ -746,7 +833,7 @@
                       </Group>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="txtNombreOrientacionSexual" pref="171" max="32767" attributes="0"/>
-                          <Component id="txtBorrarActualizarOrientacionSexual" max="32767" attributes="0"/>
+                          <Component id="txtIdOrientacionSexual" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -755,12 +842,14 @@
                                   <Component id="btnActualizarNombreOrientacionSexual" max="32767" attributes="0"/>
                                   <Component id="btnBorrarOrientacionSexual" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="43" max="32767" attributes="0"/>
                               <Component id="jScrollPane1" min="-2" pref="235" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="btnIngresarOrientacionSexual" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="286" max="32767" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btnMostrarOrientacionSexual" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -775,6 +864,7 @@
                           <Component id="lblNombreOrientacionSexual" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtNombreOrientacionSexual" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnIngresarOrientacionSexual" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnMostrarOrientacionSexual" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -785,7 +875,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="txtBorrarActualizarOrientacionSexual" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtIdOrientacionSexual" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblBorrarActualizarOrientacionSexual" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -794,7 +884,7 @@
                               <Component id="btnBorrarOrientacionSexual" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="355" max="32767" attributes="0"/>
+                      <EmptySpace pref="435" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -853,15 +943,23 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarOrientacionSexualActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtBorrarActualizarOrientacionSexual">
+            <Component class="javax.swing.JTextField" name="txtIdOrientacionSexual">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBorrarActualizarOrientacionSexualActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIdOrientacionSexualActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblBorrarActualizarOrientacionSexual">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Id a borrar/actualizar"/>
+                <Property name="text" type="java.lang.String" value="Id a borrar/actualizar/mostrar"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnMostrarOrientacionSexual">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostrarOrientacionSexualActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -881,7 +979,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jScrollPane2" pref="690" max="32767" attributes="0"/>
+                              <Component id="jScrollPane2" pref="692" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -903,6 +1001,8 @@
                                   <Component id="btnActualizarTipoDeDelito" max="32767" attributes="0"/>
                                   <Component id="btnBorrarTipoDeDelito" alignment="0" max="32767" attributes="0"/>
                               </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btnMostrarTipoDeDelito" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -917,6 +1017,7 @@
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtNombreTipoDeDelito" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnRegistrarNombreTipoDeDelito" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnMostrarTipoDeDelito" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -928,7 +1029,7 @@
                       <Component id="btnBorrarTipoDeDelito" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="281" max="-2" attributes="0"/>
-                      <EmptySpace pref="201" max="32767" attributes="0"/>
+                      <EmptySpace pref="281" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -994,6 +1095,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarTipoDeDelitoActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnMostrarTipoDeDelito">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostrarTipoDeDelitoActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlDelito">
@@ -1011,41 +1120,52 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane6" alignment="0" pref="701" max="32767" attributes="0"/>
+                          <Component id="jScrollPane6" alignment="0" pref="703" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lblFechaDelito" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="txtFechaDelito" max="32767" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="lblRunPerpDelito" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblTipoDeDelitoDelito" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="lblRunPerpDelito" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lblTipoDeDelitoDelito" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="cboTipoDelito" pref="215" max="32767" attributes="0"/>
-                                                  <Component id="txtRunPerpDelito" max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lblDetalleDelito" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                                              <Component id="txtDetalleDelito" min="-2" pref="216" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="cboTipoDelito" pref="215" max="32767" attributes="0"/>
+                                              <Component id="txtRunPerpDelito" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <EmptySpace min="-2" pref="172" max="-2" attributes="0"/>
-                                      <Component id="btnRegistrarDelito" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="lblDetalleDelito" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                                          <Component id="txtDetalleDelito" min="-2" pref="216" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="lblFechaDelito" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblIDdelito" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="txtFechaDelito" max="32767" attributes="0"/>
+                                              <Component id="txtIdDelito" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lblRunVictDelito" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                                       <Component id="txtRunVictimaDelito" min="-2" pref="215" max="-2" attributes="0"/>
                                   </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="172" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="btnRegistrarDelito" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnActualizarDelito" max="32767" attributes="0"/>
+                                      <Component id="btnBorrarDelito" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="btnMostrarDelito" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -1061,30 +1181,45 @@
                           <Component id="lblTipoDeDelitoDelito" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cboTipoDelito" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblRunPerpDelito" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtRunPerpDelito" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnRegistrarDelito" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblRunVictDelito" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtRunVictimaDelito" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblDetalleDelito" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtDetalleDelito" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblRunVictDelito" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtRunVictimaDelito" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblDetalleDelito" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtDetalleDelito" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="btnActualizarDelito" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblFechaDelito" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtFechaDelito" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnBorrarDelito" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblIDdelito" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtIdDelito" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnMostrarDelito" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
                       <Component id="jScrollPane6" min="-2" pref="266" max="-2" attributes="0"/>
-                      <EmptySpace pref="60" max="32767" attributes="0"/>
+                      <EmptySpace pref="128" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1171,6 +1306,37 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarDelitoActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnActualizarDelito">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Actualizar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarDelitoActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnBorrarDelito">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Borrar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarDelitoActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblIDdelito">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Id delito:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtIdDelito">
+            </Component>
+            <Component class="javax.swing.JButton" name="btnMostrarDelito">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostrarDelitoActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlCondena">
@@ -1187,22 +1353,37 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane7" pref="701" max="32767" attributes="0"/>
+                      <Component id="jScrollPane7" pref="703" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="lblIdDelitoCondena" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblRunJuezCondena" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtRunJuezCondena" pref="107" max="32767" attributes="0"/>
-                          <Component id="txtIdDelitoJuez" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="txtIdCondena" min="-2" pref="106" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="lblIdDelitoCondena" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblRunJuezCondena" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtRunJuezCondena" pref="107" max="32767" attributes="0"/>
+                                  <Component id="txtIdDelitoJuez" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="btnRegistrarCondena" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnRegistrarCondena" max="32767" attributes="0"/>
+                          <Component id="btnActualizarCondena" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnBorrarCondena" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnMostrarCondena" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -1220,8 +1401,16 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblIdDelitoCondena" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtIdDelitoJuez" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnActualizarCondena" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="219" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnBorrarCondena" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtIdCondena" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnMostrarCondena" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="267" max="32767" attributes="0"/>
                       <Component id="jScrollPane7" min="-2" pref="213" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
                   </Group>
@@ -1273,6 +1462,37 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarCondenaActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnActualizarCondena">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Actualizar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarCondenaActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnBorrarCondena">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Borrar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarCondenaActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Id de condena"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtIdCondena">
+            </Component>
+            <Component class="javax.swing.JButton" name="btnMostrarCondena">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostrarCondenaActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlInforme">
@@ -1298,7 +1518,7 @@
                               <Component id="jScrollPane8" min="-2" pref="499" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="179" max="32767" attributes="0"/>
+                      <EmptySpace pref="181" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1309,7 +1529,7 @@
                       <Component id="lblTop3Criminales" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane8" min="-2" pref="160" max="-2" attributes="0"/>
-                      <EmptySpace pref="386" max="32767" attributes="0"/>
+                      <EmptySpace pref="466" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
