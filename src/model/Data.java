@@ -363,7 +363,7 @@ public class Data {
     }
 
     public Condena mostrarCondena(int id) throws SQLException {
-        query = "EXEC CRUDCondena " + id + ",'irrelevate' , 'irrelevante',2";
+        query = "EXEC CRUDCondena " + id + ",'irrelevate' , 0,2";
 
         rs = con.ejecutarSelect(query);
 

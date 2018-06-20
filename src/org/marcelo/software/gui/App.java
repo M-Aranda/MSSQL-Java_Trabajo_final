@@ -65,7 +65,7 @@ public class App extends javax.swing.JFrame {
         cargarTODASlasTablas();
 
         inicializarCboDelito();
-        btnMostrarCondena.setVisible(false);
+        
 
     }
 

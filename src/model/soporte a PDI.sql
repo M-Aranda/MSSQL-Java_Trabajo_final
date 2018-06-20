@@ -319,7 +319,6 @@ CREATE PROCEDURE CRUDCondena(@id INT,@fk_juez VARCHAR(20), @fk_delito INT , @tip
 	GO	
 
 
-
 /*TRIGGERS*/
 
 /*
@@ -529,7 +528,6 @@ EXEC CRUDCondena 1,'33898085-1',3,1
 EXEC CRUDCondena 1,'33898086-1',4,1
 EXEC CRUDCondena 1,'33898087-1',5,1
 GO
-
 
 
 
